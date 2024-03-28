@@ -9,7 +9,7 @@ const Container = (props: any) => {
         <title>내 블로그</title>
       </Head>
       <header
-        className={`w-full max-w-3xl flex flex-row justify-between items-center my-1`}
+        className={`w-full max-w-screen-lg flex flex-row justify-between items-center my-1`}
       >
         <div className={`flex flex-row items-center`}>
           <Image
@@ -20,11 +20,11 @@ const Container = (props: any) => {
             objectFit={`cover`}
             className={`rounded-full`}
           />
-          <span className={`mx-2 font-extralight text-lg`}>내 블로그</span>
+          <span className={`mx-4 font-extralight`}>내 블로그</span>
         </div>
         <Nav />
       </header>
-      <main className={`w-full max-w-3xl`}>{props.children}</main>
+      <main className={`w-full max-w-screen-lg`}>{props.children}</main>
     </div>
   );
 };
