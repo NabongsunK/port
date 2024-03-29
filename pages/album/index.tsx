@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Container from "../../components/Container";
 import portfolios, { filters } from "../../data/portfolios";
 import { useState } from "react";
@@ -18,7 +17,7 @@ const getFiltered = () => {
   return ret;
 };
 
-const Portfolio = () => {
+const Album = () => {
   const [selectedFilter, setSelectedFilter] = useState("all");
   const [filtered, setFiltered] = useState(getFiltered());
   const [keys, setKeys] = useState(portfolios.map((_, idx) => idx));
@@ -50,7 +49,7 @@ const Portfolio = () => {
           ))}
         </ul>
       </div>
-      <section className="cd-gallery mt-10 pt-10">
+      <section className="cd-gallery mt-10 md:pt-10 lg:pt-12">
         <ReactMixitup
           keys={keys}
           dynamicDirection="vertical"
@@ -59,28 +58,24 @@ const Portfolio = () => {
             <div
               key={key}
               ref={ref}
-              className={
-                "w-full sm:w-1/2 lg:w-1/3 my-4 flex items-center justify-center"
-              }
+              className="sm:w-[46%] lg:w-[31%] m-4 flex items-center justify-center 
+              shadow-[0_1px_2px_0px_rgba(0,0,0,0.1)]"
               style={{
                 transition: `transform ${TRANSITION_DURATION}ms ease-out`,
                 ...style,
               }}
             >
-              <div className="shadow-[0_1px_2px_0px_rgba(0,0,0,0.1)]">
-                <Image
-                  src={portfolios[key].imgsrc}
-                  alt={`Image_${key}`}
-                  width={300}
-                  height={390}
-                />
-              </div>
+              <img
+                src={portfolios[key].imgsrc}
+                alt={`${key}`}
+                className="w-full h-auto"
+              />
             </div>
           )}
           renderWrapper={(style, ref, children, stage, frame) => {
             return (
               <div
-                className="flex flex-wrap justify-start box-content max-w-screen-lg"
+                className="flex flex-wrap box-content max-w-screen-lg"
                 style={{
                   transition: `height ${TRANSITION_DURATION}ms ease-out`,
                   ...style,
@@ -97,4 +92,4 @@ const Portfolio = () => {
   );
 };
 
-export default Portfolio;
+export default Album;

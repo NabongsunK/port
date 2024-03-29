@@ -22,7 +22,7 @@ function Test() {
     setKeys(updatedKeys);
   };
 
-  const TRANSITION_DURATION = 250;
+  const TRANSITION_DURATION = 2500;
   var filters = ["all", "react", "nodejs", "nextjs", "spring", "spring boot"];
   return (
     <div style={{ position: "relative" }}>
@@ -42,15 +42,14 @@ function Test() {
       ))}
       <ReactMixitup
         keys={keys}
-        dynamicDirection="vertical"
+        dynamicDirection="off"
         transitionDuration={TRANSITION_DURATION}
         renderCell={(key, style, ref) => (
           <div
             key={key}
             ref={ref}
             style={{
-              width: 48,
-              height: 48,
+              width: "30%",
               border: "1px solid black",
               margin: 4,
               display: "flex",
@@ -77,7 +76,7 @@ function Test() {
                 flexWrap: "wrap",
                 // as keys.length changes boxSizing must be border-box
                 boxSizing: "border-box",
-                width: w,
+                width: "100%",
                 transition: `height ${TRANSITION_DURATION}ms ease`,
                 ...style,
               }}
