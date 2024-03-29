@@ -5,7 +5,6 @@ import { useMDXComponent } from "next-contentlayer/hooks";
 
 const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const MDXComponent = useMDXComponent(post.body.code);
-
   const customMeta = {
     title: post.title,
     description: post.description,
