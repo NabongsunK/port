@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "gowun";
+  src: url("./fonts/GowunDodum-Regular.ttf");
+}
+
 *,
 *::after,
 *::before {
@@ -20,13 +25,38 @@ html * {
 }
 
 body {
-  font-size: 1.6rem;
-  font-family: "Open Sans", sans-serif;
-  /* color: #331d35; */
-  /* background-color: #e7e7e7; */
+  font-family: "gowun";
+  font-size: 2rem;
 }
 
 a {
   /* color: #41307c; */
   text-decoration: none;
+}
+
+.my_hover_line {
+  position: relative;
+  text-transform: uppercase;
+}
+
+.my_hover_line:after {
+  background: none repeat scroll 0 0 transparent;
+  bottom: 0;
+  content: "";
+  display: block;
+  height: 2px;
+  left: 50%;
+  position: absolute;
+  background: black;
+  transition: width 0.3s ease 0s, left 0.3s ease 0s;
+  width: 0;
+}
+
+.my_hover_line.selected:after {
+  left: 5%;
+  width: 90%;
+}
+.my_hover_line:hover:after {
+  width: 90%;
+  left: 5%;
 }

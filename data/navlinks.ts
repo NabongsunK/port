@@ -1,6 +1,6 @@
 const navlinks: { title: string; link: string }[] = [
-  { title: "Home", link: "/" },
-  { title: "blog", link: "/blog" },
+  { title: "대문", link: "/" },
+  { title: "토막글", link: "/blog" },
   { title: "포트폴리오", link: "/portfolio" },
 ];
 

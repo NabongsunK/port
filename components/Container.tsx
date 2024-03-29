@@ -1,14 +1,16 @@
 import Image from "next/image";
 import Head from "next/head";
 import Nav from "./Nav";
-import metadata from "data/metadata";
+import metadata, { Meta } from "data/metadata";
+import Link from "next/link";
+import { FaGithub } from "react-icons/fa";
+import { SiGmail, SiVelog } from "react-icons/si";
 
 const Container = (props: any) => {
-  const meta = {
+  const meta: Meta = {
     title: metadata.title,
     description: metadata.description,
     author: metadata.author,
-    ...props.customMeta,
   };
   return (
     <div className={`w-full flex flex-col items-center p-3`}>
@@ -29,11 +31,40 @@ const Container = (props: any) => {
             objectFit={`cover`}
             className={`rounded-full`}
           />
-          <span className={`mx-4 font-extralight`}>{metadata.title}</span>
+          <Link href="./">
+            <a className={`my_hover_line mx-6 font-bold uppercase`}>
+              {metadata.title}
+            </a>
+          </Link>
         </div>
         <Nav />
       </header>
-      <main className={`w-full max-w-screen-lg`}>{props.children}</main>
+      <main className={`w-full max-w-screen-lg min-h-[80vh]`}>
+        {props.children}
+      </main>
+      <footer className="w-full max-w-screen-lg">
+        <div className="flex flex-col items-center gap-6 py-12">
+          <div className="w-full border-b border-gray-300"></div>
+          <div className="text-4xl">Nabongsun.shop @강성수</div>
+          <ul className="flex gap-12 text-4xl">
+            <Link href={"https://github.com/NabongsunK"}>
+              <a className="text-5xl">
+                <FaGithub />
+              </a>
+            </Link>
+            <Link href={"kangtu142@gmail.com"}>
+              <a className="text-5xl">
+                <SiGmail />
+              </a>
+            </Link>
+            <Link href={"https://velog.io/@nabongsun/posts"}>
+              <a className="text-5xl">
+                <SiVelog />
+              </a>
+            </Link>
+          </ul>
+        </div>
+      </footer>
     </div>
   );
 };

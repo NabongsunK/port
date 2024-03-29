@@ -37,10 +37,8 @@ const Portfolio = () => {
           {filters.map((filter) => (
             <li
               className={
-                "h-14 flex items-center px-4 uppercase font-bold " +
-                (selectedFilter === filter
-                  ? "text-purple-900 shadow-[0_2px_0px_0px_rgba(65,48,124,1)]"
-                  : "")
+                "px-4 font-bold my_hover_line " +
+                (selectedFilter === filter ? "selected" : "")
               }
               key={filter}
               onClick={() => handleFilterClick(filter)}
