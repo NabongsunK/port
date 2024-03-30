@@ -7,6 +7,12 @@ import { FaGithub } from "react-icons/fa";
 import { SiGmail, SiVelog } from "react-icons/si";
 import useSWR from "swr";
 
+const icons = {
+  nabongsun: { src: "/logo.jpg", w: 40, h: 40 },
+  localt: { src: "/port_logo/localt.jpg", w: 160, h: 40 },
+  aloa: { src: "/port_logo/aloa.png", w: 48, h: 50 },
+};
+
 const Container = (props: any) => {
   const meta: Meta = {
     title: metadata.title,
@@ -15,21 +21,26 @@ const Container = (props: any) => {
   };
   const { data, mutate } = useSWR("isDark");
   return (
-    <div className={`w-full flex flex-col items-center p-6`}>
+    <div
+      className={
+        `my_container w-full flex flex-col items-center p-6 ` +
+        (props.thema ? props.thema : "")
+      }
+    >
       <Head>
         <title>{meta.title}</title>
         <meta content={meta.description} name="description" />
         <meta property="og:site_name" content={meta.author} />
       </Head>
       <header
-        className={`w-full max-w-screen-lg flex flex-row justify-between items-center my-1`}
+        className={`w-full max-w-screen-lg flex flex-row justify-between items-center my-1 `}
       >
         <div className={`flex flex-row items-center`}>
           <Image
-            src={`/logo.jpg`}
+            src={icons[props.thema ? props.thema : "nabongsun"].src}
             alt="로고"
-            width={40}
-            height={40}
+            width={icons[props.thema ? props.thema : "nabongsun"].w}
+            height={icons[props.thema ? props.thema : "nabongsun"].h}
             objectFit={`cover`}
             className={`rounded-full`}
           />
@@ -65,9 +76,7 @@ const Container = (props: any) => {
           </div>
         </div>
       </header>
-      <main className={`w-full max-w-screen-lg min-h-[80vh]`}>
-        {props.children}
-      </main>
+      <main className={`w-full max-w-screen-lg`}>{props.children}</main>
       <footer className="w-full max-w-screen-lg">
         <div className="flex flex-col items-center py-12 relative">
           <div className="my_line my_bottom max-w-screen-lg" />

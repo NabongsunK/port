@@ -6,7 +6,7 @@ import { InferGetStaticPropsType } from "next";
 const Blog = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
     <Container>
-      <div className={`mt-10 flex flex-col`}>
+      <div className={`mt-12 flex flex-col`}>
         {posts.map((post: any) => (
           <BlogPost
             date={post.date}

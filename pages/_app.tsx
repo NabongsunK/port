@@ -3,8 +3,8 @@ import "../styles/globals.css";
 import { useState } from "react";
 import useSWR from "swr";
 
-// import "../styles/mystyle.css";
-// import "../styles/style.css";
+import "../styles/localt.css";
+import "../styles/aloa.css";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [thema, setIsThema] = useState(0);
@@ -14,7 +14,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   });
 
   return (
-    <div className={(data ? "App dark a" : "App light a") + thema}>
+    <div
+      className={"min-h-svh " + (data ? "App dark a" : "App light a") + thema}
+    >
       <Component {...pageProps} />
     </div>
   );

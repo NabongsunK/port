@@ -3,7 +3,7 @@ import { allPosts } from "contentlayer/generated";
 import { InferGetStaticPropsType } from "next";
 import { useMDXComponent } from "next-contentlayer/hooks";
 
-const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
+const Localt = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const customMeta = {
     title: post.title,
     description: post.description,
@@ -11,7 +11,7 @@ const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
   };
   const MDXComponent = useMDXComponent(post.body.code);
   return (
-    <Container customMeta={customMeta}>
+    <Container thema="aloa" customMeta={customMeta}>
       <div className="my_blog_slug mt-10 prose">
         <h1 className="text-sky-700">{post.title}</h1>
         <MDXComponent />
@@ -36,4 +36,4 @@ export const getStaticProps = async ({ params }) => {
   };
 };
 
-export default Post;
+export default Localt;

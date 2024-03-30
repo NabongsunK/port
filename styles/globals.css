@@ -79,12 +79,16 @@ a {
   --my--text: rgba(249, 250, 251, 1);
   --my--heading: var(--my--thema);
   --my--shadow: rgba(255, 255, 255, 0.3);
+
+  --my--slug--blockquote: #1e1e1e;
 }
 .App.light {
   --my--background: #fff;
   --my--text: rgba(31, 41, 55, 1);
   --my--heading: #41307c;
   --my--shadow: rgba(2, 1, 1, 0.1);
+
+  --my--slug--blockquote: #f8f9fa;
 }
 
 .App {
@@ -149,4 +153,48 @@ a {
 
 .my_icon a:hover {
   color: var(--my--heading);
+}
+
+.my_blog_slug {
+  font-size: 16px;
+  margin: 60px auto 0 auto;
+
+  color: var(--my--text);
+
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 80ch;
+}
+
+.my_blog_slug blockquote {
+  width: 100%;
+  border-left: 4px solid var(--my--heading);
+  background-color: var(--my--slug--blockquote);
+  color: var(--my--text);
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.my_blog_slug a,
+.my_blog_slug strong {
+  color: var(--my--heading);
+}
+
+.my_blog_slug h1,
+.my_blog_slug h2,
+.my_blog_slug h3,
+.my_blog_slug h4,
+.my_blog_slug h5,
+.my_blog_slug ul {
+  width: 100%;
+  color: var(--my--text);
+}
+
+.my_blog_slug pre {
+  width: 100%;
+  border: 1px solid var(--my--shadow);
+}
+
+.my_blog_slug li code {
+  color: var(--my--text);
 }
