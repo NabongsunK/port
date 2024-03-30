@@ -5,7 +5,7 @@ import Link from "next/link";
 const Nav = () => {
   const router = useRouter();
   return (
-    <nav>
+    <nav className={`flex flex-row items-center`}>
       {navlinks.map((nav) => {
         return (
           <Link href={nav.link} key={nav.title}>

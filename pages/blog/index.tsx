@@ -7,7 +7,7 @@ const Blog = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
     <Container>
       <div className={`mt-10 flex flex-col`}>
-        {posts.map((post) => (
+        {posts.map((post: any) => (
           <BlogPost
             date={post.date}
             title={post.title}

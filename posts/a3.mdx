@@ -1,0 +1,242 @@
+---
+title: "[nextJS] 포트폴리오 만들기(3)"
+date: 2024-03-10
+description: ""
+tags:
+  -
+---
+
+## 1. 무엇을 할 것인가?
+
+[Content Filter](https://codyhouse.co/demo/content-filter/index.html#0) 이런 동작을 원했는데, 해당 코드를 분석해보니 html과 jQuery를 이용해 해당 셈플 페이지를 만들었다...
+
+그래도 다행인게 [MixItUp](https://www.kunkalabs.com/mixitup/) 이라는 모듈을 누가 구현을 해놔서 그거만 잘 이용하면 만사OK였지만, 한국어 설명이 아무데도 없어서 결국엔 이글을 쓰게된 원동력이 되었다.
+
+일단 필터와 앨범을 구현해보자.
+
+```
+components
+│  ├─ Nav.tsx
+│  └─ Container.tsx
+data
+├─ navlinks.ts
+├─ (new)portfolios.ts
+pages
+├─ _app.tsx
+├─ index.tsx
+├─ (new)portfolio            // mypage/portfolio
+│  └─ (new)index.tsx
+public
+├─ (new)portfolios           // 앨범 이미지 저장
+│
+styles
+│
+package.json
+```
+
+이제 새로생기는 디렉토리/파일은 (new)을 달아도 될것같다!
+a,b,c는 전부 삭제해주도록하자.
+
+## 2. 추가작업?
+
+- pages안의 a,b,c를 삭제한다.
+- data/navilnks.ts를 수정한다.
+
+_**data/navilnks.ts**_
+
+```
+const navlinks: { title: string; link: string }[] = [
+  { title: "Home", link: "/" },
+  { title: "포트폴리오", link: "/portfolio" },
+];
+
+export default navlinks;
+
+```
+
+- public/portfolios에 img-1.jpg ~ img-12.jpg를 가져온다.
+
+### 2.1 data
+
+_**data/portfolios.ts**_
+
+```
+const portfolios: { imgsrc: string; filter: string[] }[] = [
+  { imgsrc: "/portfolios/img-1.jpg", filter: ["all", "react", "nodejs"] },
+  { imgsrc: "/portfolios/img-2.jpg", filter: ["all", "spring", "nodejs"] },
+  { imgsrc: "/portfolios/img-3.jpg", filter: ["all", "nextjs"] },
+  { imgsrc: "/portfolios/img-4.jpg", filter: ["all", "spring boot"] },
+  { imgsrc: "/portfolios/img-5.jpg", filter: ["all", "react", "nodejs"] },
+  { imgsrc: "/portfolios/img-6.jpg", filter: ["all", "nextjs"] },
+  { imgsrc: "/portfolios/img-7.jpg", filter: ["all", "react", "nodejs"] },
+  { imgsrc: "/portfolios/img-8.jpg", filter: ["all", "spring", "nodejs"] },
+  { imgsrc: "/portfolios/img-9.jpg", filter: ["all", "nextjs", "spring boot"] },
+  { imgsrc: "/portfolios/img-10.jpg", filter: ["all", "react", "nodejs"] },
+  { imgsrc: "/portfolios/img-11.jpg", filter: ["all", "nextjs"] },
+  { imgsrc: "/portfolios/img-12.jpg", filter: ["all", "react", "nodejs"] },
+];
+
+export var filters = [
+  "all",
+  "react",
+  "nodejs",
+  "nextjs",
+  "spring",
+  "spring boot",
+];
+
+export default portfolios;
+
+```
+
+imgsrc는 이미지 경로 역할을 할것이고, filter는 해당 이미지를 필터링 할 목록이다.
+
+## 3. portfolio 페이지
+
+_**pages/portfolio**_
+
+```
+import Image from "next/image";
+import Container from "../../components/Container";
+import portfolios, { filters } from "../../data/portfolios";
+
+const Portfolio = () => {
+  return (
+    <Container>
+      <div className="mt-10 flex flex-col shadow-[0_1px_1px_0px_rgba(0,0,0,0.08)]">
+        <ul className="flex justify-around">
+          {filters.map((filter) => (
+            <li
+              className={"h-14 flex items-center px-4 uppercase font-bold "}
+              key={filter}
+            >
+              {filter}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <section className="cd-gallery mt-10 pt-10">
+        <div className="flex flex-wrap justify-start box-content max-w-screen-lg">
+          {portfolios.map((port, idx) => (
+            <div
+              key={`port ${idx}`}
+              className={
+                "w-full sm:w-1/2 lg:w-1/3 my-4 flex items-center justify-center "}
+            >
+              <div className="shadow-[0_1px_2px_0px_rgba(0,0,0,0.1)]">
+                <Image
+                  src={port.imgsrc}
+                  alt={`Image ${idx + 1}`}
+                  width={300}
+                  height={390}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    </Container>
+  );
+};
+
+export default Portfolio;
+
+```
+
+그동안은 bootstrab을 쓴다고는 했지만, css파일에 의존했는데, 이번에는 온전히 tailwind만으로 css작업을 해봤다...
+
+확실히 이렇게하니 tailwind나 bootstrab의 장단점이 보인다.
+
+- 장점
+  CSS를 작성할 때 시간을 많이 절약할 수 있음
+  컴포넌트 생성과 관리가 쉬우며, 유지보수하기 편함
+
+- 단점
+  CSS가 필요할 때가 오는데, 이때 일관성을 해칠 수 있음
+  className이 끝도없이 길어짐
+
+이제 이렇게하고 useState를 이용한 필터링 작업을 한번 해보자!
+
+## 3 필터링
+
+### 3.1 필터
+
+_**pages/portfolio**_
+
+```
+import Image from "next/image";
+import Container from "../../components/Container";
+import portfolios, { filters } from "../../data/portfolios";
+import { useState } from "react";
+
+const Portfolio = () => {
+  const [selectedFilter, setSelectedFilter] = useState("all");
+  const handleFilterClick = (selectedType: string) => {
+    setSelectedFilter(selectedType);
+  };
+
+  return (
+    <Container>
+      <div className="mt-10 flex flex-col shadow-[0_1px_1px_0px_rgba(0,0,0,0.08)]">
+        <ul className="flex justify-around">
+          {filters.map((filter) => (
+            <li
+              className={
+                "h-14 flex items-center px-4 uppercase font-bold " +
+                (selectedFilter === filter
+                  ? "text-purple-900 shadow-[0_2px_0px_0px_rgba(65,48,124,1)]"
+                  : "")
+              }
+              key={filter}
+              onClick={() => handleFilterClick(filter)}
+            >
+              {filter}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <section className="cd-gallery mt-10 pt-10">
+        ...
+      </section>
+    </Container>
+  );
+};
+
+export default Portfolio;
+
+```
+
+이러면, 되고!
+
+_**pages/portfolio**_
+
+```
+<section className="cd-gallery mt-10 pt-10">
+  <div className="flex flex-wrap justify-start box-content max-w-screen-lg">
+    {portfolios.map((port, idx) => (
+      <div
+        key={`port ${idx}`}
+        className={
+          "w-full sm:w-1/2 lg:w-1/3 my-4 flex items-center justify-center " +
+          (port.filter.includes(selectedFilter) ? "" : "hidden")
+        }
+      >
+        <div className="shadow-[0_1px_2px_0px_rgba(0,0,0,0.1)]">
+          <Image
+            src={port.imgsrc}
+            alt={`Image ${idx + 1}`}
+            width={300}
+            height={390}
+          />
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+```
+
+section 안쪽부분은 이렇게 처리하면 된다!
+
+이제 여기까지 하고, 직접 필터를 눌러보면 잘 적용이 된다!
+
+![](https://velog.velcdn.com/images/nabongsun/post/168bca94-e7fb-4058-8e1e-e0ca04fe4b06/image.png)

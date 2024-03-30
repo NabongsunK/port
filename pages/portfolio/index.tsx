@@ -32,7 +32,7 @@ const Portfolio = () => {
 
   return (
     <Container>
-      <div className="mt-10 flex flex-col shadow-[0_1px_1px_0px_rgba(0,0,0,0.08)]">
+      <div className="mt-10 flex flex-col relative">
         <ul className="flex justify-around">
           {filters.map((filter) => (
             <li
@@ -47,7 +47,9 @@ const Portfolio = () => {
             </li>
           ))}
         </ul>
+        <div className="my_line my_bot max-w-screen-lg" />
       </div>
+
       <section className="cd-gallery mt-10 pt-10">
         <ReactMixitup
           keys={keys}

@@ -34,9 +34,72 @@ a {
   text-decoration: none;
 }
 
+.App.a0 {
+  --my--thema: rgb(209, 241, 156);
+}
+
+.App.a1 {
+  --my--thema: rgb(247, 157, 156);
+}
+
+.App.a2 {
+  --my--thema: rgb(231, 187, 252);
+}
+
+.App.a3 {
+  --my--thema: rgb(211, 113, 211);
+}
+
+.App.a4 {
+  --my--thema: rgb(249, 197, 138);
+}
+
+.App.a5 {
+  --my--thema: rgb(250, 214, 55);
+}
+
+.App.a6 {
+  --my--thema: rgb(253, 238, 177);
+}
+
+.App.a7 {
+  --my--thema: rgb(191, 218, 253);
+}
+
+.App.a8 {
+  --my--thema: rgb(168, 255, 255);
+}
+
+.App.a9 {
+  --my--thema: rgb(65, 160, 224);
+}
+
+.App.dark {
+  --my--background: rgba(30, 41, 59, 1);
+  --my--text: rgba(249, 250, 251, 1);
+  --my--heading: var(--my--thema);
+  --my--shadow: rgba(255, 255, 255, 0.3);
+}
+.App.light {
+  --my--background: #fff;
+  --my--text: rgba(31, 41, 55, 1);
+  --my--heading: #41307c;
+  --my--shadow: rgba(2, 1, 1, 0.1);
+}
+
+.App {
+  background: var(--my--background);
+  color: var(--my--text);
+}
+
+/* .App * {
+  transition: all 0.3s fade-in;
+} */
+
 .my_hover_line {
   position: relative;
   text-transform: uppercase;
+  cursor: pointer;
 }
 
 .my_hover_line:after {
@@ -47,7 +110,7 @@ a {
   height: 2px;
   left: 50%;
   position: absolute;
-  background: black;
+  background: var(--my--heading);
   transition: width 0.3s ease 0s, left 0.3s ease 0s;
   width: 0;
 }
@@ -56,7 +119,34 @@ a {
   left: 5%;
   width: 90%;
 }
+
 .my_hover_line:hover:after {
   width: 90%;
   left: 5%;
+}
+
+.my_line {
+  background: none repeat scroll 0 0 transparent;
+  content: "";
+  display: block;
+  height: 2px;
+  position: absolute;
+  width: 100%;
+  box-shadow: 1px 2px 0px var(--my--shadow);
+}
+
+.my_line.my_bot {
+  bottom: 1px;
+}
+
+.my_line.my_top {
+  top: 1px;
+}
+
+.selected {
+  color: var(--my--heading);
+}
+
+.my_icon a:hover {
+  color: var(--my--heading);
 }

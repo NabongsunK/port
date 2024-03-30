@@ -1,0 +1,291 @@
+---
+title: "[nextJS] 포트폴리오 만들기(4)"
+date: 2024-03-30 10:47:05
+description: ""
+tags:
+  -
+---
+
+## 1.react-mixitup 사용법
+
+[MixItUp](https://www.kunkalabs.com/mixitup/) 을 써보려 했으나, JQuery에서만 지원하는 것 같아 여러 방법을 찾아보다가
+
+[react-mixitup](https://react-mixitup.ricsam.dev/) 을찾게되었다. 해당 공식 문서를 찬찬히 보면 알겠지만 내가 알게된것들을 한번 정리해보자!
+
+```
+function Shuffle() {
+  const NUM_CELLS = 9;
+  const [keys, setKeys] = React.useState(() => range(NUM_CELLS));
+
+  const _shuffle = () => {
+    setKeys(shuffle(range(NUM_CELLS)));
+  };
+
+  const TRANSITION_DURATION = 250;
+
+  return (
+    <div>
+      <button onClick={_shuffle}>Shuffle</button>
+      <ReactMixitup
+        keys={keys}
+        dynamicDirection="vertical"
+        transitionDuration={TRANSITION_DURATION}
+        renderCell={(key, style, ref) => (
+          <div
+            key={key}
+            ref={ref}
+            style={{
+              width: 48,
+              height: 48,
+              border: '1px solid black',
+              margin: 4,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              // transition-duration must be
+              // same as transitionDuration prop
+              transition: `transform ${TRANSITION_DURATION}ms ease`,
+              ...style
+            }}
+          >
+            {key}
+          </div>
+        )}
+        renderWrapper={(style, ref, children) => {
+          const squareWidth = (48 + 4 * 2);
+          const wrapperWidth = squareWidth *
+            Math.ceil(Math.sqrt(NUM_CELLS));
+          return (
+            <div
+              style={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                boxSizing: 'content-box',
+                width: wrapperWidth,
+                height: wrapperWidth,
+                padding: '12px 0',
+                ...style
+              }}
+              ref={ref}
+            >
+              {children}
+            </div>
+          );
+        }}
+      />
+    </div>
+  );
+}
+```
+
+보통 이렇게 쓰면 된다.
+
+ReactMixitup 의 props부터 하나씩 확인해보자
+
+### 1.1 keys
+
+List of unique numbers or strings identifying and representing each cell.
+역) 각 셀을 식별하고 나타내는 고유한 숫자 또는 문자열 목록입니다.
+
+> keys: (string | number)[];
+
+라는데, 좀있다 설명할 renderCell의 key값이 되는것들의 집합이다.
+object면, key값이 string일테고, array면 key값이 number일것이다.
+
+그래서 보통 이 keys 값을 useState로 정의해놓고 (ex. const [keys, setKeys] = useState(초기값))
+
+setKeys를 통해 리렌더링해서 넣는다.
+
+### 1.2 renderCell
+
+Is called to render each cell.
+역) 각 셀을 렌더링하기 위해 호출됩니다.
+
+>
+
+```
+type RenderCell = (
+  key: string | number,
+  style: ICellStyle,
+  ref: React.Ref<any>,
+  frame: IFrame,
+  activeFrame: boolean
+) => React.ReactNode | JSX.Element;
+```
+
+얘는 이제 각 셀이 된다. 함수의 형태이며, 해당 콜백함수의 return값이 셀의 JSX가 된다.
+
+- key - 키(prop)의 대응 키
+- style - 각 셀에 적용할 CSS 변형을 나타내는 [ICellStyle](https://react-mixitup.ricsam.dev/docs/api#icellstyle)여야 함.
+- ref - 각 셀의 위치(오프셋 왼쪽, 오프셋 위)를 읽기 위해 외부 요소에 전달되어야 함.
+- frame - [IFrame](https://react-mixitup.ricsam.dev/docs/api#iframe)
+- activeFrame - 다음에 렌더링 될 프레임인 경우 [Terminology](https://react-mixitup.ricsam.dev/docs/terminology)을 참조하세요.
+
+인데 key밖에 안써봐서 잘 모르겠다...
+
+### 1.3 renderWrapper
+
+Is called to render the wrapper [optional]. Apply styling for how the cells should be positioned, e.g. flex or css grid
+역) wrapper를 렌더링하기 위해 호출됩니다(선택 사항). 셀 위치 지정 방법에 대한 스타일을 적용합니다. 예: flex 또는 CSS grid
+
+>
+
+```
+type RenderWrapper = (
+  style: IWrapperStyle,
+  ref: React.Ref<any>,
+  cells: JSX.Element[],
+  frame: IFrame,
+  activeFrame: boolean
+) => React.ReactNode | JSX.Element;
+```
+
+flex혹은 grid를 쓰려면 부모에서 설정을해줘야 하는데 그역할을 해준다. 얘도 콜백함수의 return값이 부모의 JSX가 된다.
+
+grid를 써보려고 했으나, grid를 쓰면 내가 잘못쓴건지 애니메이션이 이상하게 적용되었다. 따라서 이글에서는 flex를 이용할 것
+
+- style - [IWrapperStyle](https://react-mixitup.ricsam.dev/docs/api#iwrapperstyle)는 높이를 업데이트하기 위해 요소에 전달되어야 함
+- ref - 외부 요소에 전달되어야 함. 래퍼의 높이와 너비(오프셋 너비, 오프셋 높이)를 읽는 데 사용됩니다.
+- cells - 렌더링될 JSX 요소의 목록
+- frame - [IFrame](https://react-mixitup.ricsam.dev/docs/api#iframe)
+- activeFrame - 다음에 렌더링 될 프레임인 경우 [Terminology](https://react-mixitup.ricsam.dev/docs/terminology)를 참조하세요.
+
+라는데 얘도 잘 모르겠다...
+
+### 1.4 dynamicDirection
+
+셀을 추가하거나 제거할 때 wrapper가 세로로 또는 가로로 확장/축소되어야 하는 경우입니다.
+
+셀을 추가하거나 제거하지 않는 경우 dynamicDirection을 'off'로 설정할 수 있습니다. 이렇게 하면 COMMIT 단계가 건너뛰어져 약간의 성능 이점이 있습니다. COMMIT 단계에서는 wrapper가 측정되고 전환 효과가 적용됩니다.
+
+> dynamicDirection: 'horizontal' | 'vertical' | 'off';
+
+보통 필터링이라 하면 필터를 변경될때마다 셀이 추가/제거가 될텐데, 그때 셀을 확대/축소 시켜주는것 같다.
+
+켜놓는게 에니메이션상으로 더 이쁘다.
+
+### 1.5 transitionDuration
+
+Should match the longest css transition-duration used. If 0 transitions are disabled.
+역)사용된 가장 긴 CSS 전환 기간과 일치해야 합니다. 0개이면 전환이 비활성화됩니다.
+
+> transitionDuration: number;
+
+### 2. 사용
+
+_**pages/portfolio/index.tsx**_
+
+```
+import Image from "next/image";
+import Container from "../../components/Container";
+import portfolios, { filters } from "../../data/portfolios";
+import { useState } from "react";
+
+const getFiltered = () => {
+  const ret: { [key: string]: any[] } = {};
+  let indexes = portfolios.map((_, idx) => idx);
+
+  filters.forEach((filter) => {
+    const filteredIndexes = indexes.filter((idx) =>
+      portfolios[idx].filter.includes(filter)
+    );
+    ret[filter] = filteredIndexes;
+  });
+
+  return ret;
+};
+
+const Portfolio = () => {
+  const [selectedFilter, setSelectedFilter] = useState("all");
+  const [filtered, setFiltered] = useState(getFiltered());
+  const [keys, setKeys] = useState(portfolios.map((_, idx) => idx));
+
+  const handleFilterClick = (selectedType: string) => {
+    setSelectedFilter(selectedType);
+    setKeys(filtered[selectedType]);
+  };
+
+  return (
+    ...
+  );
+};
+
+export default Portfolio;
+
+```
+
+getFiltered 함수는 각 필터에 해당하는 portfolios의 index들의 배열을 value로 갖는 object를 return 한다.
+
+그럴 object를 useState를 통해 마운트될때 처음 계산하고, 그뒤로는 수정하지 않는다.
+
+_**텍스트**_
+
+```
+<Container>
+  <div className="mt-10 flex flex-col shadow-[0_1px_1px_0px_rgba(0,0,0,0.08)]">
+    <ul className="flex justify-around">
+      {filters.map((filter) => (
+        <li
+          className={
+            "h-14 flex items-center px-4 uppercase font-bold " +
+            (selectedFilter === filter
+              ? "text-purple-900 shadow-[0_2px_0px_0px_rgba(65,48,124,1)]"
+              : "")
+          }
+          key={filter}
+          onClick={() => handleFilterClick(filter)}
+        >
+          {filter}
+        </li>
+      ))}
+    </ul>
+  </div>
+  <section className="cd-gallery mt-10 pt-10">
+    <ReactMixitup
+      keys={keys}
+      dynamicDirection="vertical"
+      transitionDuration={TRANSITION_DURATION}
+      renderCell={(key, style, ref) => (
+        <div
+          key={key}
+          ref={ref}
+          className={
+            "w-full sm:w-1/2 lg:w-1/3 my-4 flex items-center justify-center"
+          }
+          style={{
+            transition: `transform ${TRANSITION_DURATION}ms ease-out`,
+            ...style,
+          }}
+        >
+          <div className="shadow-[0_1px_2px_0px_rgba(0,0,0,0.1)]">
+            <Image
+              src={portfolios[key].imgsrc}
+              alt={`Image_${key}`}
+              width={300}
+              height={390}
+            />
+          </div>
+        </div>
+      )}
+      renderWrapper={(style, ref, children, stage, frame) => {
+        return (
+          <div
+            className="flex flex-wrap justify-start box-content max-w-screen-lg"
+            style={{
+              transition: `height ${TRANSITION_DURATION}ms ease-out`,
+              ...style,
+            }}
+            ref={ref}
+          >
+            {children}
+          </div>
+        );
+      }}
+    />
+  </section>
+</Container>
+```
+
+wrapper랑 shell의 JSX를 넣었다.
+
+다음번에는 md파일을 넣는 blog도 만들어보자.
