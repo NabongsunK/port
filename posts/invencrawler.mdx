@@ -1,0 +1,111 @@
+---
+title: "워드클라우드를 이용한 커뮤니티 제목 시각화"
+date: 2024-03-30 21:22:35
+description: "Python을 활용한 커뮤니티 데이터 수집및, 정규화, 분석 시각화"
+tags: python
+  -
+---
+
+> **Python**을 활용한 커뮤니티 데이터 수집및, 정규화, 분석 시각화 [Github 주소](https://github.com/NabongsunK/invencloud)
+
+![](https://velog.velcdn.com/images/nabongsun/post/e8459109-98b7-4b6f-b5fd-6b892fe04007/image.png)
+
+# 1. 사용된 기술
+
+- **BeautifulSoup**를 이용한 커뮤니티 크롤링과, 데이터 추출
+- **KoNLPyf**를 이용한 한국어 데이터 전처리
+- **pandas**를 이용한 데이터 저장
+- **NLTK**를 이용한 자연어 처리
+- **WordCloud**를 이용한 데이터 시각화
+
+![](https://velog.velcdn.com/images/nabongsun/post/01059d73-42b2-4398-b391-24b5eea3cf28/image.png)
+
+# 2. 코드 분석
+
+## 2.1 BeautifulSoup를 이용한 크롤링, 데이터 추출
+
+```
+for i in range(100):
+	url = "https://www.inven.co.kr/board/lostark/4811?my=chu&p="+str(i)
+	# url = "https://www.inven.co.kr/board/lostark/4811?p="+str(i)
+	response =requests.get(url)
+	source = response.text
+	soup=bs(source,"html.parser")
+	list = soup.select("#new-board > form > div > table > tbody > tr")
+	for li in list:
+		title = li.select_one("td.tit a").contents[2].strip()
+		date = li.select_one("td.date").text
+		if ':'in date:
+			date = today
+```
+
+최대 백번까지 돌렸다.
+
+## 2.2 KoNlPyf를 이용한 한국어 데이터 전처리
+
+```
+if ':'in date:
+  date = today
+date = date[0:3]+str(((int(date[3:5])-1)//5)*5+1)
+nounss = okt.nouns(title)
+tmp = []
+for noun in nounss:
+  if(len(noun)>1):
+    tmp.append(noun)
+if date in db.keys():
+  db[date]+=tmp
+else:
+  db[date] = tmp
+```
+
+date의 종류가 두가지 있는데, 48시간 이내 글에는 12:34 이렇게 시간으로 표시되고, 그 이후 글에는 03.12 이렇게 날짜로 표시된다. 3일마다 끊어서 db Object에 저장
+
+## 2.3 pandas를 이용한 데이터 저장
+
+```
+data = pd.DataFrame.from_dict(db, orient='index')
+# print(data)
+path="C:/Users/user/Desktop/kang/htmlPr/"+today+".xlsx"
+data.to_excel(path)
+```
+
+데이터를 수집한 날짜.xlsx로 저장한다.
+
+## 2.4 NLTK를 이용한 자연어 처리
+
+```
+for ex_i in ex_datas:
+# ex_i = "07-01"
+	tokens_ko = ex_datas[ex_i]
+	ko = nltk.Text(tokens_ko)
+
+	data = ko.vocab().most_common(40)
+	tmp_data = dict(data)
+	if('nan' in tmp_data):
+		del tmp_data['nan']
+	for i in range(len(rep)):
+		if rep[i] in tmp_data:
+			tmp_data[cha[i]] = tmp_data[rep[i]]
+			del tmp_data[rep[i]]
+```
+
+LNTK를 이용하여, 자연어 처리를하여 형태소 형태인 명사 추출후 tmp_data로 잘린 명사 복구
+
+## 2.5 WordCloud를 이용한 데이터 시각화
+
+```
+wordcloud= WordCloud(
+    font_path = 'C:/Windows/Fonts/NGULIM.TTF',
+    relative_scaling = 0.2,
+    background_color = 'white').generate_from_frequencies(tmp_data)
+
+plt.figure(figsize=(10,8))
+plt.imshow(wordcloud)
+plt.title(ex_i+"~"+add_days_to_date(ex_i,4), fontsize=25)
+plt.axis("off")
+# savefig_default.png
+plt.savefig('img'+'1219'+'/'+ex_i+'.png')
+plt.close()
+```
+
+WordCloud를 이용하여, 이미지화 시킴

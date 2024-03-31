@@ -1,0 +1,177 @@
+---
+title: "ALOA 프로젝트"
+date: 2024-03-31 15:27:37
+description: "로스트아크 api를 이용한 전적검색기능을 이미지화 시키는 사이트 개발 aws-ec2를 이용하여 https 웹페이지 배포"
+tags: React, nodeJS, Bootstrap, Python,
+  -
+---
+
+> 로스트아크 api를 이용한 **전적검색기능**을 **이미지화** 시키는 사이트 개발
+> **aws-ec2**를 이용하여 **https** 웹페이지 배포 [github 주소](https://github.com/jongak/aloa)
+
+![](https://velog.velcdn.com/images/nabongsun/post/10a3499f-368c-48ac-9a59-3f0fe6a587c2/image.png)
+
+# 1. 개요
+
+## 1.1 프로젝트 요약
+
+### 1. 일정
+
+2023년 10월 21일 ~ 2023년 11월 28일(39일)
+
+### 2. 프로젝트 요약
+
+- 로스트아크 api를 이용한 **전적검색기능**을 **이미지화** 시키는 사이트 개발
+- **bootstap**과 **미디어쿼리**를 이용한 **반응형 웹사이트**개발과 **테마설정**기능
+- react의 **라이브러리**를 활용한 **DnD**, **toggle**, **list** 기능 구현
+- 상태관리와 쿠키를 통한 **관리자 기능** 구현
+- **AWS-EC2**와, **aws Route53**를 이용한 **https** 웹사이트 배포
+- **python**을 이용한 **서버접속자수 로그 자동기록**
+
+### 3. 나의 역할
+
+- 프로젝트 매니저로 일정 조율, git 관리
+- 홈페이지 전체적인 UI/UX 설계
+- 로스트아크 API를 사용하여 필요한 데이터 수집/가공 알고리즘 구현
+- 수집한 데이터를 이미지화 시키는 알고리즘 구현
+- 해당 이미지를 aws-s3에 저장하고, 가져오는 API 제작
+- Python을 활용한 서버접속자수 로그 자동기록 알고리즘 구현
+- 서비스에 필요한 추가기능 개발
+
+### 4. 느낀점/배운점
+
+- React에서 aws에서 지원하는 다양한 서비스를 경험해봄
+- 실제 서비스를 기획/개발 하는 과정에서 사용자 경험에 대해 많이 고민해보고 개발을 진행함.
+
+### 5. 개발시 발생한 문제점/해결책
+
+- 프로젝트 초창기엔 최적화 문제를 신경을 안쓰고 있다가, 서비스 에서 문제가 생겼지만, 코드를 리펙토링하고 불필요한 부분들을 최적화 하여 LightHouse를 통해 높은 점수를 받음
+- AWS-프리티어를 이용하여 서버에 사용된 EC2의 RAM이 부족했지만, 메모리 스왑을 통해 해결함
+- 생성된 이미지의 용량이 너무커 서버측에서 문제가 생겼지만, 이미지 리사이징을 통해 용량을 줄여 해결함
+- AWS의 과금정책이 변경되어 요금이 과하게 부과되었지만, 사용하던 서비스를 줄여 해결함
+- 로스트아크 API의 빈번한 업데이트에 의해 버그가 생겼지만, 에러핸들링을 통해 해결함
+
+![](https://velog.velcdn.com/images/nabongsun/post/89139ba6-a54b-4c0f-a86c-aeef352c48c2/image.png)
+
+# 2. 사용된 기술
+
+### 2.1 js
+
+- dotenv: 민감한 개인정보를 숨기는 env 파일을 사용하기 위한 모듈
+
+### 2.2 app-server
+
+- canvas2image: DOM을 jpg사진으로 변경해주는 모듈
+- file-saver: 서버에서 보내주는 사진을 클라이언트쪽 컴퓨터에 저장하는 모듈
+- react-copy-to-clipboard: 클라이언트에서 클립보드를 저장하는 모듈
+- react-toastify: 토스트(알림) 효과를 구현하기위해 사용한 모듈
+
+### 2.3 api-server
+
+- aws-sdk: nodeJS에서 aws를 사용하기 위한 모듈
+- multer: 클라이언트에서 전달한 이미지를 받기위한 모듈
+
+### 2.4 python
+
+- dotenv: Python에서 env파일에 있는 정보를 사용하기위한 모듈
+- boto3: Python에서 aws-s3에있는 파일에 접근하기 위한 모듈
+- subprocess: Python에서 cmd요청을 하고 log를 받아오기 위해 사용한 모듈
+
+![](https://velog.velcdn.com/images/nabongsun/post/304315f9-f30a-449c-a601-b3714dfc5193/image.png)
+
+# 3. 코드 분석
+
+### Layout
+
+```
+import { Outlet } from "react-router-dom";
+import Header from "./Header";
+import Footer from "./Footer";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setIsThemaOpen } from "../../store/mainSlice";
+import { ToastContainer } from "react-toastify";
+import { useCookies } from "react-cookie";
+import { signin, signout } from "../../store/loginSlice";
+
+function Layout() {
+  const isDark = useSelector((state) => state.mainSlice.isDark);
+  const thema = useSelector((state) => state.mainSlice.thema);
+  const dispatch = useDispatch();
+  const is_signed = useSelector((state) => state.loginSlice.is_signed);
+  const is_manager = useSelector((state) => state.loginSlice.is_manager);
+  const name = useSelector((state) => state.loginSlice.name);
+
+  // 기존 쿠키 저장
+  const [cookies, setCookies, removeCookies] = useCookies(["id"]);
+
+  const logOut = function () {
+    dispatch(signout());
+    removeCookies("is_signed");
+    removeCookies("name");
+    removeCookies("is_manager");
+    setCookies("is_signed", false, { path: "/" });
+  };
+
+  useEffect(() => {
+    if (cookies.is_signed && cookies.name) {
+      dispatch(
+        signin({
+          newUser: { name: cookies.name, is_manager: cookies.is_manager },
+        })
+      );
+    }
+  }, []);
+
+  useEffect(() => {
+    if (is_signed) {
+      setCookies("is_signed", true, { path: "/" });
+      setCookies("is_manager", is_manager, { path: "/" });
+      setCookies("name", name, { path: "/" });
+    }
+  }, [is_signed]);
+
+  return (
+    <div
+      className={`App ${isDark} a${thema}`}
+      onClick={() => {
+        dispatch(setIsThemaOpen({ newIsThemaOpen: true }));
+      }}
+    >
+      <Header logOut={logOut} />
+      <ToastContainer
+        position="top-right" // 알람 위치 지정
+        autoClose={6000} // 자동 off 시간
+        hideProgressBar={false} // 진행시간바 숨김
+        // closeOnClick={true} // 클릭으로 알람 닫기
+        rtl={false} // 알림 좌우 반전
+        pauseOnFocusLoss={false} // 화면을 벗어나면 알람 정지
+        draggable={false} // 드래그 가능
+        pauseOnHover // 마우스를 올리면 알람 정지
+        theme="light"
+        // limit={1} // 알람 개수 제한
+      />
+      <Outlet />
+
+      <Footer />
+    </div>
+  );
+}
+
+export default Layout;
+
+```
+
+최상위 컴포넌트로 로그인 쿠키와 테마를 설정하고, Toast 컴포넌트를 집어넣어, 알림창을 만들어 놓는다.
+
+![](https://velog.velcdn.com/images/nabongsun/post/261d8352-2608-45b8-8b98-29a729a2a77a/image.png)
+
+![](https://velog.velcdn.com/images/nabongsun/post/64e7d531-a860-443a-ab02-12860da47888/image.gif)
+
+![](https://velog.velcdn.com/images/nabongsun/post/406ebbd2-fcb8-460f-a138-007c4867ddbb/image.gif)
+![](https://velog.velcdn.com/images/nabongsun/post/436a6ce8-638f-4ba7-b208-b02522e1f516/image.gif)
+![](https://velog.velcdn.com/images/nabongsun/post/4f7c27b8-55f6-4b98-b783-622a1fcb482e/image.gif)
+
+![](https://velog.velcdn.com/images/nabongsun/post/4e284a04-e5b7-410b-866e-e23216d445af/image.gif)
+
+![](https://velog.velcdn.com/images/nabongsun/post/2ad2c101-4e26-49e7-854a-b7c336c6c465/image.png)

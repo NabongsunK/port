@@ -14,11 +14,17 @@ const icons = {
 };
 
 const Container = (props: any) => {
-  const meta: Meta = {
-    title: metadata.title,
-    description: metadata.description,
-    author: metadata.author,
-  };
+  console.log(props);
+  if (props.customMeta) {
+    var meta: Meta = props.customMeta;
+  } else {
+    var meta: Meta = {
+      title: metadata.title,
+      description: metadata.description,
+      author: metadata.author,
+    };
+  }
+
   const { data, mutate } = useSWR("isDark");
   return (
     <div
