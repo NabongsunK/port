@@ -8,10 +8,12 @@ const Localt = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
     title: post.title,
     description: post.description,
     date: new Date(post.date).toISOString(),
+    thema: post.thema,
   };
+
   const MDXComponent = useMDXComponent(post.body.code);
   return (
-    <Container thema="aloa" customMeta={customMeta}>
+    <Container thema={customMeta.thema} customMeta={customMeta}>
       <div className="my_blog_slug mt-10 prose">
         <h1 className="text-sky-700">{post.title}</h1>
         <MDXComponent />

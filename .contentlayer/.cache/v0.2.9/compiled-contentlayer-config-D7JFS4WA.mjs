@@ -1,6 +1,6 @@
+// contentlayer.config.ts
 import { defineDocumentType, makeSource } from "contentlayer/source-files";
-
-export const Post = defineDocumentType(() => ({
+var Post = defineDocumentType(() => ({
   name: "Post",
   contentType: "mdx",
   filePathPattern: `**/*.mdx`,
@@ -8,11 +8,15 @@ export const Post = defineDocumentType(() => ({
     title: { type: "string", required: true },
     date: { type: "string", required: true },
     description: { type: "string", required: true },
-    thema: { type: "string", required: false },
-  },
+    thema: { type: "string", required: false }
+  }
 }));
-
-export default makeSource({
+var contentlayer_config_default = makeSource({
   contentDirPath: "posts",
-  documentTypes: [Post],
+  documentTypes: [Post]
 });
+export {
+  Post,
+  contentlayer_config_default as default
+};
+//# sourceMappingURL=compiled-contentlayer-config-D7JFS4WA.mjs.map

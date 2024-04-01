@@ -79,6 +79,7 @@ a {
   --my--text: rgba(249, 250, 251, 1);
   --my--heading: var(--my--thema);
   --my--shadow: rgba(255, 255, 255, 0.3);
+  --my--heading--bg: rgba(2, 1, 1, 0.9);
 
   --my--slug--blockquote: #1e1e1e;
 }
@@ -87,6 +88,7 @@ a {
   --my--text: rgba(31, 41, 55, 1);
   --my--heading: #41307c;
   --my--shadow: rgba(2, 1, 1, 0.1);
+  --my--heading--bg: rgba(245, 200, 183, 0.9);
 
   --my--slug--blockquote: #f8f9fa;
 }
@@ -102,7 +104,6 @@ a {
 
 .my_hover_line {
   position: relative;
-  text-transform: uppercase;
   cursor: pointer;
 }
 
@@ -125,8 +126,8 @@ a {
 }
 
 .my_hover_line:hover:after {
-  width: 90%;
   left: 5%;
+  width: 90%;
 }
 
 .my_line {
@@ -197,4 +198,14 @@ a {
 
 .my_blog_slug li code {
   color: var(--my--text);
+}
+
+.my-heading-bg {
+  background-color: var(--my--heading--bg);
+}
+
+@media (min-width: 640px) {
+  .my-heading-bg {
+    background-color: inherit;
+  }
 }

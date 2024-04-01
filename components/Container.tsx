@@ -3,10 +3,11 @@ import Head from "next/head";
 import Nav from "./Nav";
 import metadata, { Meta } from "data/metadata";
 import Link from "next/link";
-import { FaGithub } from "react-icons/fa";
-import { SiGmail, SiVelog } from "react-icons/si";
 import useSWR from "swr";
-
+import { FaGithub } from "react-icons/fa";
+import { SiVelog } from "react-icons/si";
+import { CiMail } from "react-icons/ci";
+import { IoMdMail } from "react-icons/io";
 const icons = {
   nabongsun: { src: "/logo.jpg", w: 40, h: 40 },
   localt: { src: "/port_logo/localt.jpg", w: 160, h: 40 },
@@ -14,7 +15,6 @@ const icons = {
 };
 
 const Container = (props: any) => {
-  console.log(props);
   if (props.customMeta) {
     var meta: Meta = props.customMeta;
   } else {
@@ -29,7 +29,7 @@ const Container = (props: any) => {
   return (
     <div
       className={
-        `my_container w-full flex flex-col items-center p-6 ` +
+        `my_container w-full flex flex-col items-center p-12 sm:p-6 ` +
         (props.thema ? props.thema : "")
       }
     >
@@ -39,7 +39,7 @@ const Container = (props: any) => {
         <meta property="og:site_name" content={meta.author} />
       </Head>
       <header
-        className={`w-full max-w-screen-lg flex flex-row justify-between items-center my-1 `}
+        className={`w-full max-w-screen-lg flex flex-col justify-between items-center my-1 sm:flex-row`}
       >
         <div className={`flex flex-row items-center`}>
           <Image
@@ -52,11 +52,15 @@ const Container = (props: any) => {
           />
           <Link href="./">
             <a className={`my_hover_line mx-6 font-bold uppercase`}>
-              {metadata.title}
+              {props.thema && props.thema == "aloa" ? "aloa" : metadata.title}
             </a>
           </Link>
         </div>
-        <div className={`flex flex-row items-center`}>
+        <div
+          className={`my-heading-bg flex flex-row items-center justify-between z-10 bottom-0
+          fixed w-full h-20 p-10
+          sm:static sm:w-auto sm:h-auto sm:p-0`}
+        >
           <Nav />
           <div
             className={`flex flex-row items-center cursor-pointer`}
@@ -82,9 +86,11 @@ const Container = (props: any) => {
           </div>
         </div>
       </header>
-      <main className={`w-full max-w-screen-lg`}>{props.children}</main>
+      <main className={`w-full max-w-screen-lg min-h-[600px]`}>
+        {props.children}
+      </main>
       <footer className="w-full max-w-screen-lg">
-        <div className="flex flex-col items-center py-12 relative">
+        <div className="flex flex-col items-center py-20 relative sm:py-12">
           <div className="my_line my_bottom max-w-screen-lg" />
           <div className="my-6 text-4xl">Nabongsun.shop @강성수</div>
           <ul className="my_icon flex gap-12 text-4xl">
@@ -93,14 +99,14 @@ const Container = (props: any) => {
                 <FaGithub />
               </a>
             </Link>
-            <Link href={"kangtu142@gmail.com"}>
-              <a className="text-5xl">
-                <SiGmail />
-              </a>
-            </Link>
             <Link href={"https://velog.io/@nabongsun/posts"}>
               <a className="text-5xl">
                 <SiVelog />
+              </a>
+            </Link>
+            <Link href={"kangtu142@gmail.com"}>
+              <a className="text-5xl">
+                <IoMdMail />
               </a>
             </Link>
           </ul>

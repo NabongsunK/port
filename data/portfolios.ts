@@ -1,25 +1,45 @@
-const portfolios: { imgsrc: string; filter: string[] }[] = [
-  { imgsrc: "/portfolios/img-1.jpg", filter: ["all", "react", "nodejs"] },
-  { imgsrc: "/portfolios/img-2.jpg", filter: ["all", "spring", "nodejs"] },
-  { imgsrc: "/portfolios/img-3.jpg", filter: ["all", "nextjs"] },
-  { imgsrc: "/portfolios/img-4.jpg", filter: ["all", "spring boot"] },
-  { imgsrc: "/portfolios/img-5.jpg", filter: ["all", "react", "nodejs"] },
-  { imgsrc: "/portfolios/img-6.jpg", filter: ["all", "nextjs"] },
-  { imgsrc: "/portfolios/img-7.jpg", filter: ["all", "react", "nodejs"] },
-  { imgsrc: "/portfolios/img-8.jpg", filter: ["all", "spring", "nodejs"] },
-  { imgsrc: "/portfolios/img-9.jpg", filter: ["all", "nextjs", "spring boot"] },
-  { imgsrc: "/portfolios/img-10.jpg", filter: ["all", "react", "nodejs"] },
-  { imgsrc: "/portfolios/img-11.jpg", filter: ["all", "nextjs"] },
-  { imgsrc: "/portfolios/img-12.jpg", filter: ["all", "react", "nodejs"] },
+type Port = {
+  imgsrc: string;
+  filter: string[];
+  css: string[];
+  path: string;
+};
+
+const portfolios: Port[] = [
+  {
+    imgsrc: "/portfolios/img-1.jpg",
+    filter: ["all", "python"],
+    css: ["all"],
+    path: "portfolio/invencrawler",
+  },
+  {
+    imgsrc: "/portfolios/img-2.jpg",
+    filter: ["all", "react", "nodejs", "python"],
+    css: ["all", "bootstrap"],
+    path: "portfolio/localt",
+  },
+  {
+    imgsrc: "/portfolios/img-3.jpg",
+    filter: ["all", "react", "nodejs", "python"],
+    css: ["all", "bootstrap"],
+    path: "portfolio/aloa",
+  },
+  {
+    imgsrc: "/portfolios/img-4.jpg",
+    filter: ["all"],
+    css: ["all"],
+    path: "portfolio/3rdp",
+  },
+  {
+    imgsrc: "/portfolios/img-5.jpg",
+    filter: ["all", "nextjs"],
+    css: ["all", "tailwind"],
+    path: "portfolio/nabongsun",
+  },
 ];
 
-export var filters = [
-  "all",
-  "react",
-  "nodejs",
-  "nextjs",
-  "spring",
-  "spring boot",
-];
+export var filters = ["all", "react", "nodejs", "nextjs", "python"];
+
+export var css = ["all", "bootstrap", "tailwind"];
 
 export default portfolios;

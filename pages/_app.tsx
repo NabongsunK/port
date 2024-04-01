@@ -5,6 +5,7 @@ import useSWR from "swr";
 
 import "../styles/localt.css";
 import "../styles/aloa.css";
+import "../styles/main.css";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [thema, setIsThema] = useState(0);

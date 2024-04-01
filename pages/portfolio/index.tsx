@@ -3,6 +3,7 @@ import Container from "../../components/Container";
 import portfolios, { filters } from "../../data/portfolios";
 import { useState } from "react";
 import { ReactMixitup } from "react-mixitup";
+import Link from "next/link";
 
 const getFiltered = () => {
   const ret: { [key: string]: any[] } = {};
@@ -33,11 +34,11 @@ const Portfolio = () => {
   return (
     <Container>
       <div className="mt-10 flex flex-col relative">
-        <ul className="flex justify-around">
+        <ul className="flex flex-col justify-around sm:flex-row">
           {filters.map((filter) => (
             <li
               className={
-                "px-4 font-bold my_hover_line " +
+                "px-4 font-bold my_hover_line uppercase " +
                 (selectedFilter === filter ? "selected" : "")
               }
               key={filter}
@@ -67,14 +68,16 @@ const Portfolio = () => {
                 ...style,
               }}
             >
-              <div className="shadow-[0_1px_2px_0px_rgba(0,0,0,0.1)]">
-                <Image
-                  src={portfolios[key].imgsrc}
-                  alt={`Image_${key}`}
-                  width={300}
-                  height={390}
-                />
-              </div>
+              <Link href={portfolios[key].path}>
+                <div className="shadow-[0_1px_2px_0px_rgba(0,0,0,0.1)]">
+                  <Image
+                    src={portfolios[key].imgsrc}
+                    alt={`Image_${key}`}
+                    width={300}
+                    height={390}
+                  />
+                </div>
+              </Link>
             </div>
           )}
           renderWrapper={(style, ref, children, stage, frame) => {
