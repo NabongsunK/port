@@ -48,13 +48,13 @@ const infos: Info[] = [
     logo: <SiVelog />,
     title: "blog",
     body: "velog.io/@nabongsun",
-    src: "https:/velog.io/@nabongsun",
+    src: "https://velog.io/@nabongsun",
   },
   {
     logo: <FaGithub />,
     title: "git",
     body: "github.com/NabongsunK",
-    src: "https:/github.com/NabongsunK",
+    src: "https://github.com/NabongsunK",
   },
 ];
 

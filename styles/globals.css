@@ -194,7 +194,8 @@ a {
 .my_blog_slug h3,
 .my_blog_slug h4,
 .my_blog_slug h5,
-.my_blog_slug ul {
+.my_blog_slug ul,
+.my_blog_slug > p {
   width: 100%;
   color: var(--my--text);
 }
