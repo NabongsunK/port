@@ -71,12 +71,18 @@ const Home = () => {
                     <p className="text-2xl">{timeline.date}</p>
                     <div
                       className={
-                        `font-bold text-5xl mb-3 ` +
-                        (timeline.src ? "my_hover_line " : "") +
-                        (timeline.title ? "" : "hidden")
+                        `flex font-bold text-5xl mb-3 ` +
+                        (timeline.title ? "" : "hidden") +
+                        (_idx % 2 ? "" : "flex-row-reverse")
                       }
                     >
-                      {timeline.title}
+                      <div
+                        className={
+                          `w-fit ` + (timeline.src ? "my_hover_line " : "")
+                        }
+                      >
+                        {timeline.title}
+                      </div>
                     </div>
                     <p className="text-3xl md:text-2xl leading-snug ">
                       {timeline.body}

@@ -104,6 +104,7 @@ const timelines: Timeline[] = [
     date: "2024.03 ~ 2024.04",
     title: "Nabongsun.shop",
     body: "nextJS를 활용한 SSR 반응형 페이지",
+    src: "/portfolio/nabongsun",
   },
 ];
 

@@ -7,5 +7,6 @@ import a4Mdx from './a4.mdx.json' assert { type: 'json' }
 import aloaMdx from './aloa.mdx.json' assert { type: 'json' }
 import invencrawlerMdx from './invencrawler.mdx.json' assert { type: 'json' }
 import localtMdx from './localt.mdx.json' assert { type: 'json' }
+import nabongsunMdx from './nabongsun.mdx.json' assert { type: 'json' }
 
-export const allPosts = [a1Mdx, a2Mdx, a3Mdx, a4Mdx, aloaMdx, invencrawlerMdx, localtMdx]
+export const allPosts = [a1Mdx, a2Mdx, a3Mdx, a4Mdx, aloaMdx, invencrawlerMdx, localtMdx, nabongsunMdx]

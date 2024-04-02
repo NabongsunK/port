@@ -29,7 +29,7 @@ const Portfolio = () => {
     setKeys(filtered[selectedType]);
   };
 
-  const TRANSITION_DURATION = 600;
+  const TRANSITION_DURATION = 300;
 
   return (
     <Container>
@@ -68,16 +68,19 @@ const Portfolio = () => {
                 ...style,
               }}
             >
-              <Link href={portfolios[key].path}>
-                <div className="shadow-[0_1px_2px_0px_rgba(0,0,0,0.1)]">
+              <a href={portfolios[key].path}>
+                <div className="">
                   <Image
                     src={portfolios[key].imgsrc}
                     alt={`Image_${key}`}
                     width={300}
-                    height={390}
+                    height={340}
                   />
+                  <div className="flex px-6 text-bold text-heading justify-center">
+                    {portfolios[key].title}
+                  </div>
                 </div>
-              </Link>
+              </a>
             </div>
           )}
           renderWrapper={(style, ref, children, stage, frame) => {
