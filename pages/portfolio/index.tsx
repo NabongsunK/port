@@ -68,12 +68,12 @@ const Portfolio = () => {
               }}
             >
               <a href={portfolios[key].path}>
-                <div className="">
+                <div className="px-6 transition ease-out duration-300 transform hover:scale-95">
                   <Image
                     src={portfolios[key].imgsrc}
                     alt={`Image_${key}`}
-                    width={300}
-                    height={340}
+                    width={525}
+                    height={595}
                   />
                 </div>
                 <div className="flex px-6 text-bold text-heading justify-center">

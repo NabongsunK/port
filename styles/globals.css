@@ -7,6 +7,21 @@
   src: url("./fonts/GowunDodum-Regular.ttf");
 }
 
+/* 스크롤바 설정*/
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* 스크롤바 막대 설정*/
+::-webkit-scrollbar-thumb {
+  background: #393c42;
+}
+
+/* 스크롤바 뒷 배경 설정*/
+::-webkit-scrollbar-track {
+  background-color: rgb(209, 241, 156);
+}
+
 *,
 *::after,
 *::before {
@@ -17,6 +32,7 @@
 
 html {
   font-size: 62.5%;
+  /* overflow: hidden; */
 }
 
 html * {
@@ -27,6 +43,7 @@ html * {
 body {
   font-family: "gowun";
   font-size: 2rem;
+  overflow-y: scroll;
 }
 
 a {

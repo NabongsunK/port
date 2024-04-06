@@ -1,0 +1,92 @@
+---
+title: "스크롤바 때문에 화면이 밀려요"
+date: 2024-04-06 12:43:03
+description: "스크롤바 때문에 화면이 밀리는 이슈에 대한 해결방법들"
+tags:
+  -
+---
+
+[nabongsun.shop](https://www.nabongsun.shop) css패치를 하는김에 버그? 도 발견한것 같다.
+바로 스크롤바가 생기면, 스크롤바의 width떄문에 App 크기가 작아져 화면이 밀려보였다.
+
+여러가지 방법을 찾아보다가 한곳에 정리해두면 좋을것 같았다.
+
+# 해결책
+
+### 1. display:none
+
+해결책중에 하나는 그냥 모든경우에 안보이게 하는방법이다.
+
+```
+// global.css
+
+	/* 크롬, 사파리, 오페라 스크롤바 옵션 */
+::-webkit-scrollbar {
+	display: none;
+}
+
+
+body {
+	/* 익스플로러 스크롤바 옵션 */
+  -ms-overflow-style: none;
+ 	/* 파이어폭스 스크롤바 옵션 */
+  scrollbar-width: none;
+
+...
+}
+```
+
+출처: [[트러블슈팅] 스크롤바 width 때문에, 왼쪽으로 밀리는 이슈](https://velog.io/@jinseob102/%EC%9D%B4%EC%8A%88-%EC%8A%A4%ED%81%AC%EB%A1%A4-width-%EB%95%8C%EB%AC%B8%EC%97%90-%EC%99%BC%EC%AA%BD%EC%9C%BC%EB%A1%9C-%EB%B0%80%EB%A6%AC%EB%8A%94-%EC%9D%B4%EC%8A%88)
+
+이러면 되긴하는데, 그래도 PC에서는 스크롤바가 있는게 좋아보여서 다른방법을 찾아보았다
+
+### 2. overflow-y: scroll
+
+이번엔 모든경우에 보이게 하는방법이다.
+
+ㅋㅋㅋㅋㅋㅋ
+
+```
+// global.css
+
+body {
+  ...
+
+  overflow-y: scroll;
+}
+```
+
+출처: [스크롤바가 생길때 영역 밀리는 현상..ㅠㅠ](http://www.sudadot.com/bbs/bbs.php?id=869572&mid=board_LyRgk0&mode=view)
+
+overflow-y 는 y축방향으로 오버플로우가 발생했을때 어떻게 해결할건지 설정하는 것인데,
+
+이걸 scroll로 하게되면 스크롤로 해결하게하고, 그냥 스크롤바가 계속 보인다.
+
+이제 스크롤바를 커스텀하면 될것 같다.
+
+# nabongsun.shop의 스크롤바
+
+```
+//global.css
+
+/* 스크롤바 설정*/
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* 스크롤바 막대 설정*/
+::-webkit-scrollbar-thumb {
+  background: #393c42;
+}
+
+/* 스크롤바 뒷 배경 설정*/
+::-webkit-scrollbar-track {
+  background-color: rgb(209, 241, 156);
+}
+```
+
+aloa블랙(#393c42)과 aloa그린(#d1f19c)을 사용하였다.
+
+안타깝게도 테마색은 App에 있어서 body에 먹히는 스크롤에적용을 못했다.
+
+나중에 nextJS에서 테마를 App바깥에 먹일 수 있는 방법을 한번 찾아봐야겠다.
