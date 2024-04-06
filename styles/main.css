@@ -1,6 +1,6 @@
 .my_main_line {
   right: 50%;
-  border: 2px solid var(--my--heading);
+  border-color: var(--my--heading);
   border-radius: 1%;
 }
 

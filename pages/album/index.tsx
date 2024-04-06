@@ -27,7 +27,7 @@ const Album = () => {
     setKeys(filtered[selectedType]);
   };
 
-  const TRANSITION_DURATION = 600;
+  const TRANSITION_DURATION = 6000;
 
   return (
     <Container>

@@ -3,7 +3,6 @@ import Container from "../../components/Container";
 import portfolios, { filters } from "../../data/portfolios";
 import { useState } from "react";
 import { ReactMixitup } from "react-mixitup";
-import Link from "next/link";
 
 const getFiltered = () => {
   const ret: { [key: string]: any[] } = {};
@@ -29,7 +28,7 @@ const Portfolio = () => {
     setKeys(filtered[selectedType]);
   };
 
-  const TRANSITION_DURATION = 300;
+  const TRANSITION_DURATION = 600;
 
   return (
     <Container>
@@ -76,9 +75,9 @@ const Portfolio = () => {
                     width={300}
                     height={340}
                   />
-                  <div className="flex px-6 text-bold text-heading justify-center">
-                    {portfolios[key].title}
-                  </div>
+                </div>
+                <div className="flex px-6 text-bold text-heading justify-center">
+                  {portfolios[key].title}
                 </div>
               </a>
             </div>

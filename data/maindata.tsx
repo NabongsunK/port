@@ -14,7 +14,6 @@ type Timeline = {
   date: string;
   title: string;
   body: string;
-  body2?: string;
   src?: string;
 };
 
@@ -72,8 +71,7 @@ const timelines: Timeline[] = [
   {
     date: "2023.05 ~ 2023.11",
     title: "",
-    body: "[멀티캠퍼스] 프론트엔드 개발자 교육과정(React)",
-    body2: "수료 (최우수상)",
+    body: "[멀티캠퍼스] 프론트엔드 개발자 교육과정(React)수료(최우수상)",
   },
   {
     date: "2023.07",
@@ -84,15 +82,13 @@ const timelines: Timeline[] = [
   {
     date: "2023.9 ~ 2023.10",
     title: "Loca!T 프로젝트",
-    body: "한국관광공사가 제공한 Tour-api를 이용한, 전국의 축제 리스트를 지역별 지도로 확인",
-    body2: "React, NodeJS로 개발하여, 반응형 SPA 개발",
+    body: "한국관광공사가 제공한 Tour-api를 이용한, 전국의 축제 리스트를 지역별 지도로 확인\n React, NodeJS로 개발하여, 반응형 SPA 개발",
     src: "/portfolio/localt",
   },
   {
     date: "2023.12 ~",
     title: "ALOA 프로젝트",
-    body: "로스트아크 api를 이용한, 전적검색기능을 이미지화 시키는 사이트 개발",
-    body2: "aws-ec2를 이용하여 https 웹페이지 배포",
+    body: "로스트아크 api를 이용한, 전적검색기능을 이미지화 시키는 사이트 개발\n aws-ec2를 이용하여 https 웹페이지 배포",
     src: "/portfolio/aloa",
   },
   {

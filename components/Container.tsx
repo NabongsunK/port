@@ -6,12 +6,11 @@ import Link from "next/link";
 import useSWR from "swr";
 import { FaGithub } from "react-icons/fa";
 import { SiVelog } from "react-icons/si";
-import { CiMail } from "react-icons/ci";
 import { IoMdMail } from "react-icons/io";
 const icons = {
-  nabongsun: { src: "/logo.jpg", w: 40, h: 40 },
-  localt: { src: "/port_logo/localt.jpg", w: 160, h: 40 },
-  aloa: { src: "/port_logo/aloa.png", w: 48, h: 50 },
+  nabongsun: { src: "/logo.jpg", w: 40, h: 40, href: "./about" },
+  localt: { src: "/port_logo/localt.jpg", w: 160, h: 40, href: "./" },
+  aloa: { src: "/port_logo/aloa.png", w: 48, h: 50, href: "https://aloa.kr" },
 };
 
 const Container = (props: any) => {
@@ -41,21 +40,21 @@ const Container = (props: any) => {
       <header
         className={`w-full max-w-screen-lg flex flex-col justify-between items-center my-1 sm:flex-row`}
       >
-        <div className={`flex flex-row items-center`}>
-          <Image
-            src={icons[props.thema ? props.thema : "nabongsun"].src}
-            alt="로고"
-            width={icons[props.thema ? props.thema : "nabongsun"].w}
-            height={icons[props.thema ? props.thema : "nabongsun"].h}
-            objectFit={`cover`}
-            className={`rounded-full`}
-          />
-          <Link href="./">
-            <a className={`my_hover_line mx-6 font-bold uppercase`}>
+        <Link href={icons[props.thema ? props.thema : "nabongsun"].href}>
+          <a className={`flex flex-row items-center`}>
+            <Image
+              src={icons[props.thema ? props.thema : "nabongsun"].src}
+              alt="로고"
+              width={icons[props.thema ? props.thema : "nabongsun"].w}
+              height={icons[props.thema ? props.thema : "nabongsun"].h}
+              objectFit={`cover`}
+              className={`rounded-full`}
+            />
+            <div className={`my_hover_line mx-6 font-bold uppercase`}>
               {props.thema && props.thema == "aloa" ? "aloa" : metadata.title}
-            </a>
-          </Link>
-        </div>
+            </div>
+          </a>
+        </Link>
         <div
           className={`my-heading-bg flex flex-row items-center justify-between z-10 bottom-0
           fixed w-full h-20 p-10
@@ -92,8 +91,16 @@ const Container = (props: any) => {
       <footer className="w-full max-w-screen-lg">
         <div className="flex flex-col items-center py-20 relative sm:py-12">
           <div className="my_line my_bottom max-w-screen-lg" />
-          <div className="my-6 text-4xl">Nabongsun.shop @강성수</div>
-          <ul className="my_icon flex gap-12 text-4xl">
+          <div className="flex flex-row my-6 text-4xl">
+            Nabongsun.shop&nbsp;
+            <Link href="/about">
+              <a>
+                <div className="pb-2 my_hover_line"> @강성수</div>
+              </a>
+            </Link>
+          </div>
+
+          <ul className="my_icon flex gap-12 text-4xl items-center">
             <Link href={"https://github.com/NabongsunK"}>
               <a className="text-5xl">
                 <FaGithub />
@@ -105,7 +112,7 @@ const Container = (props: any) => {
               </a>
             </Link>
             <Link href={"kangtu142@gmail.com"}>
-              <a className="text-5xl">
+              <a className="text-6xl">
                 <IoMdMail />
               </a>
             </Link>
