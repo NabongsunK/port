@@ -8,7 +8,7 @@ import { FaGithub } from "react-icons/fa";
 import { SiVelog } from "react-icons/si";
 import { IoMdMail } from "react-icons/io";
 const icons = {
-  nabongsun: { src: "/logo.jpg", w: 40, h: 40, href: "./about" },
+  nabongsun: { src: "/logo.jpg", w: 40, h: 40, href: "/about" },
   localt: { src: "/port_logo/localt.jpg", w: 160, h: 40, href: "./" },
   aloa: { src: "/port_logo/aloa.png", w: 48, h: 50, href: "https://aloa.kr" },
 };

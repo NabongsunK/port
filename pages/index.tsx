@@ -1,5 +1,7 @@
+import About from "./about";
+
 const Home = () => {
-  return <div>hi</div>;
+  return <About></About>;
 };
 
 export default Home;

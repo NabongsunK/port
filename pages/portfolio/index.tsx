@@ -32,12 +32,12 @@ const Portfolio = () => {
 
   return (
     <Container>
-      <div className="mt-10 flex flex-col relative">
-        <ul className="flex flex-col justify-around sm:flex-row">
+      <div className="mt-6 flex flex-col relative">
+        <ul className="flex flex-row flex-wrap justify-around">
           {filters.map((filter) => (
             <li
               className={
-                "px-4 font-bold my_hover_line uppercase " +
+                "px-4 font-bold my_hover_line uppercase mt-4 " +
                 (selectedFilter === filter ? "selected" : "")
               }
               key={filter}
@@ -72,8 +72,8 @@ const Portfolio = () => {
                   <Image
                     src={portfolios[key].imgsrc}
                     alt={`Image_${key}`}
-                    width={525}
-                    height={595}
+                    width={600}
+                    height={680}
                   />
                 </div>
                 <div className="flex px-6 text-bold text-heading justify-center">
