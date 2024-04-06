@@ -54,7 +54,12 @@ const About = () => {
               ))}
             </div>
           </div>
+
           <div className="container mx-auto w-full h-full">
+            <div className="block md:hidden">
+              <div className="my_line -my-8"></div>
+            </div>
+
             <div className="relative wrap overflow-hidden h-full">
               <div>
                 <div className="my_main_line absolute h-full md:border-2"></div>
@@ -79,7 +84,7 @@ const About = () => {
                     <p className="text-2xl">{timeline.date}</p>
                     <div
                       className={
-                        `flex font-bold text-5xl mb-1 ` +
+                        `flex font-bold text-4xl mb-2 md:text-5xl ` +
                         (timeline.title ? "" : "hidden") +
                         (_idx % 2 ? "" : "md:flex-row-reverse")
                       }
@@ -92,7 +97,7 @@ const About = () => {
                         {timeline.title}
                       </div>
                     </div>
-                    <p className="text-3xl md:text-2xl leading-snug">
+                    <p className="text-2xl leading-snug">
                       {timeline.body.split("\n").map((line, index) => (
                         <span key={index}>
                           {line}
