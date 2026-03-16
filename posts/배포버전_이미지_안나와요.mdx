@@ -1,0 +1,72 @@
+---
+title: "배포버전에서 이미지가 안 나와요"
+date: 2026-03-15 23:59:00
+description: "Next.js를 /port 같은 서브패스로 올렸을 때 public 이미지가 깨지는 원인과 해결"
+tags:
+  - nextjs
+  - nginx
+  - cloudflare-tunnel
+  - basePath
+---
+
+로컬에서는 이미지가 잘 보이는데, 배포 후 이미지가 깨지는 경우가 있었다.
+
+나는 `wwmw 프로젝트`는 3000에 이미 올려두었고, `Nabongsun.Shop 프로젝트`는 3030에 띄운 후,
+`wwmw.shop/port`로 들어오면 3030으로 보내고 싶었다.
+
+구성은 대충 이런 느낌.
+
+- Cloudflare Tunnel → 맥미니 `:80`
+- nginx(`:80`)에서 경로별로 분기
+  - `/` → `localhost:3000`
+  - `/port` → `localhost:3030`
+- Nabongsun.Shop 프로젝트는 `basePath: "/port"`
+
+근데 여기서 이미지가 깨졌다.
+
+# 원인
+
+`public/` 이미지를 코드에서 이런 식으로 쓰고 있었다.
+
+```
+imgsrc: "/portfolios/aloa.jpg"
+```
+
+문제는 이게 **절대경로(루트 기준)** 라서,
+
+- 페이지는 `https://wwmw.shop/port` 아래에서 열리는데
+- 이미지는 `https://wwmw.shop/portfolios/aloa.jpg` 로 요청이 나감
+
+그래서 nginx는 그 요청을 `/`로 판단해서 **3000 서비스로 보내버리고**,
+3030 포트폴리오 앱의 `public/portfolios`에 있는 이미지를 못 찾는 상황이 됐다.
+
+# 해결책. basePath를 붙여서 요청되게 만들기
+
+`/port`를 하드코딩하지 말고 env로 관리했다.
+
+`.env`(로컬)에는 빈 값으로 두고,
+
+```
+NEXT_PUBLIC_BASE_PATH=
+```
+
+배포 서버(운영)에서는:
+
+```
+NEXT_PUBLIC_BASE_PATH=/port
+```
+
+그리고 이미지 경로를 이렇게 조립:
+
+```
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+imgsrc: `${basePath}/portfolios/aloa.jpg`
+```
+
+이제 배포에서는 이미지 요청이:
+
+- `https://wwmw.shop/port/portfolios/aloa.jpg`
+
+처럼 나가서 nginx의 `/port` 분기에 걸리고, 3030에서 정상 제공된다.
+
+추가로 `next/image`를 쓰는 경우도 같은 규칙이 적용된다. (예: `/logo_big.jpg` 같은 것도 `${basePath}/logo_big.jpg` 로)

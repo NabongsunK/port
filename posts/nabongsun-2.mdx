@@ -1,0 +1,70 @@
+---
+title: "nabongsun.shop (2) "
+date: 2026-03-16 23:59:00
+description: "nextJS와 tailwind로 만든 개인블로그(2)"
+tags: Next.js, nginx, Cloudflare Tunnel, PM2
+---
+
+> [nabongsun.shop](/port/blog/nabongsun) 이후,
+> 2년만에 다시 이 프로젝트를 배포하였다.
+
+# 1. Nabongsun.shop 재개발
+
+처음 Nabongsun.shop을 만들었을 때는 Vercel 위에서 단일 서비스로만 운영하고 있었다.
+이번에 구조를 다시 보면서, 새로 만든 wwmw 서비스(맥 미니)에 포트폴리오를 함께 올리고 싶었고,  
+도메인은 다음과 같이 정리하는 것을 목표로 했다.
+
+- `https://wwmw.shop` → 기존 서비스
+- `https://wwmw.shop/port` → 포트폴리오
+  이를 위해 포트폴리오 프로젝트는 별도 포트(3030)에서 돌리되, `/port` 기준으로 동작하도록 정리했다.
+
+# 2. nginx와 Cloudflare Tunnel 정리
+
+처음 wwmw.shop을 붙였을 때는 구조가 이렇게 되어 있었다.
+
+- `wwmw.shop` → Cloudflare Tunnel → 맥 미니 `:3000`
+- 맥 미니 내부 nginx(`:80`) → `localhost:3000`
+  즉, Cloudflare Tunnel이 애초에 3000번 포트를 직접 바라보고 있어서,  
+  nginx 레벨에서 `/`와 `/port`를 유연하게 나누기가 애매한 상태였다.
+  그래서 책임을 조금 더 분리하기로 했다.
+- Cloudflare Tunnel → 맥 미니 `:80` (nginx 앞단까지만)
+- nginx(`:80`)에서 경로별로 프록시
+  - `/` → `localhost:3000` (기존 WWMW 서비스)
+  - `/port` → `localhost:3030` (포트폴리오 프로젝트)
+- 포트폴리오 Next.js는 `basePath: "/port"` + `port 3030`
+  이렇게 바꿔두면, **외부에서는 하나의 도메인(`wwmw.shop`)만 바라보되**,  
+  실제 라우팅/분리는 nginx 레벨에서 경로 기준으로 명확하게 관리할 수 있다.
+
+# 3. 이미지가 안 보이던 이유
+
+[배포버전에서 이미지가 안 나와요](https://wwmw.shop/port/blog/%EB%B0%B0%ED%8F%AC%EB%B2%84%EC%A0%84_%EC%9D%B4%EB%AF%B8%EC%A7%80_%EC%95%88%EB%82%98%EC%99%80%EC%9A%94)
+이곳에 따로 정리하였다.
+
+# 4. PM2로 운영 프로세스 고정
+
+마지막으로, SSH 세션에 의존하지 않고도 서비스가 안정적으로 유지되도록 PM2로 운영 프로세스를 관리하도록 구성했다
+
+```bash
+npm run build
+pm2 start npm --name "port-app" -- start
+pm2 save
+pm2 startup
+```
+
+이렇게 해두니:
+
+- 서버가 재부팅되어도 포트폴리오 앱이 자동으로 다시 올라오고,
+- `pm2 restart port-app` 한 줄로 배포를 갱신할 수 있게 됐다.
+
+# 5. 정리
+
+1편이 “nextJS + tailwind 로 블로그 만들었다”에 가까웠다면,  
+이번 2편은 **실제로 이걸 어떻게 운영 환경에 붙였는지** 중점에 두었다.
+
+- `basePath`와 public 이미지 경로
+- `/`와 `/port`를 나누는 nginx 설정
+- Cloudflare Tunnel을 포트가 아닌 **80번 nginx 앞단**으로 붙이는 것
+- PM2로 프로세스 관리
+
+이 네 가지를 정리하고 나니, 이제 `wwmw.shop`과 포트폴리오를 같이 운영하면서도
+설정이 비교적 깔끔하게 유지되는 느낌이 들었다.

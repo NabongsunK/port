@@ -4,6 +4,20 @@ import { IoMdMail } from "react-icons/io";
 import { FaPhone } from "react-icons/fa";
 import { SiVelog } from "react-icons/si";
 
+const getBirthdayWithAge = (birth: string) => {
+  const [year, month, day] = birth.split(".").map(Number);
+  const today = new Date();
+  let age = today.getFullYear() - year;
+  const currentMonth = today.getMonth() + 1;
+  const currentDay = today.getDate();
+
+  if (currentMonth < month || (currentMonth === month && currentDay < day)) {
+    age -= 1;
+  }
+
+  return `${birth}(${age} 세)`;
+};
+
 type Info = {
   logo: JSX.Element;
   title: string;
@@ -58,7 +72,7 @@ const infos: Info[] = [
     logo: <FaBirthdayCake />,
     className: "select-none",
     title: "생년월일",
-    body: "1997.10.19(26 세)",
+    body: getBirthdayWithAge("1997.10.19"),
   },
   {
     logo: <FaHome />,

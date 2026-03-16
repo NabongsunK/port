@@ -10,13 +10,6 @@ const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 const portfolios: Port[] = [
   {
-    id: 8,
-    title: "레거시 VB 시스템 웹 전환",
-    imgsrc: `${basePath}/portfolios/carrer1.png`,
-    filter: ["all", "react", "db"],
-    path: "portfolio/carrer1",
-  },
-  {
     id: 1,
     title: "InvenCrawler",
     imgsrc: `${basePath}/portfolios/invencrawler.jpg`,
@@ -52,14 +45,28 @@ const portfolios: Port[] = [
     path: "portfolio/wwmw",
   },
   {
-    id: 7,
+    id: 6,
+    title: "Nabongsun.shop v2",
+    imgsrc: `${basePath}/portfolios/nabongsun2.png`,
+    filter: ["all", "nextjs"],
+    path: "portfolio/nabongsun2",
+  },
+  {
+    id: 9,
+    title: "레거시 VB 시스템 웹 전환",
+    imgsrc: `${basePath}/portfolios/carrer1.png`,
+    filter: ["all", "react", "db"],
+    path: "portfolio/carrer1",
+  },
+  {
+    id: 8,
     title: "추가 시스템 개발 프로젝트",
     imgsrc: `${basePath}/portfolios/carrer2.png`,
     filter: ["all", "server", "db"],
     path: "portfolio/carrer2",
   },
   {
-    id: 6,
+    id: 7,
     title: "데이터 처리 API 서비스 구축 프로젝트",
     imgsrc: `${basePath}/portfolios/carrer3.png`,
     filter: ["all", "python", "server", "db"],
