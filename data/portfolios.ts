@@ -6,60 +6,62 @@ type Port = {
   path?: string;
 };
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
 const portfolios: Port[] = [
   {
     id: 8,
     title: "레거시 VB 시스템 웹 전환",
-    imgsrc: "/portfolios/carrer1.png",
+    imgsrc: `${basePath}/portfolios/carrer1.png`,
     filter: ["all", "react", "db"],
     path: "portfolio/carrer1",
   },
   {
     id: 1,
     title: "InvenCrawler",
-    imgsrc: "/portfolios/invencrawler.jpg",
+    imgsrc: `${basePath}/portfolios/invencrawler.jpg`,
     filter: ["all", "python"],
     path: "portfolio/invencrawler",
   },
   {
     id: 2,
     title: "Loca!T 프로젝트",
-    imgsrc: "/portfolios/localt.jpg",
+    imgsrc: `${basePath}/portfolios/localt.jpg`,
     filter: ["all", "react", "python"],
     path: "portfolio/localt",
   },
   {
     id: 3,
     title: "ALOA 프로젝트",
-    imgsrc: "/portfolios/aloa.jpg",
+    imgsrc: `${basePath}/portfolios/aloa.jpg`,
     filter: ["all", "react", "python"],
     path: "portfolio/aloa",
   },
   {
     id: 4,
     title: "Nabongsun.shop",
-    imgsrc: "/portfolios/nabongsun.jpg",
+    imgsrc: `${basePath}/portfolios/nabongsun.jpg`,
     filter: ["all", "nextjs"],
     path: "portfolio/nabongsun",
   },
   {
     id: 5,
     title: "WWMW",
-    imgsrc: "/portfolios/wwmw.png",
+    imgsrc: `${basePath}/portfolios/wwmw.png`,
     filter: ["all", "nextjs", "server"],
     path: "portfolio/wwmw",
   },
   {
     id: 7,
     title: "추가 시스템 개발 프로젝트",
-    imgsrc: "/portfolios/carrer2.png",
+    imgsrc: `${basePath}/portfolios/carrer2.png`,
     filter: ["all", "server", "db"],
     path: "portfolio/carrer2",
   },
   {
     id: 6,
     title: "데이터 처리 API 서비스 구축 프로젝트",
-    imgsrc: "/portfolios/carrer3.png",
+    imgsrc: `${basePath}/portfolios/carrer3.png`,
     filter: ["all", "python", "server", "db"],
     path: "portfolio/carrer3",
   },

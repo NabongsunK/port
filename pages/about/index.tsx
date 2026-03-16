@@ -11,6 +11,8 @@ import {
   personalProjects,
 } from "../../data/maindata";
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
 const About = () => {
   return (
     <Container>
@@ -20,7 +22,7 @@ const About = () => {
             <div className="flex flex-row md:flex-col gap-12 md:gap-0">
               <div className="justify-center hidden sm:flex">
                 <Image
-                  src={"/logo_big.jpg"}
+                  src={`${basePath}/logo_big.jpg`}
                   alt="로고"
                   width={160}
                   height={160}
@@ -123,7 +125,7 @@ const About = () => {
                             </Link>
                           )}
                         </div>
-                        <div className="text-2xl whitespace-pre-wrap -ml-6">
+                        <div className="text-2xl whitespace-pre-wrap">
                           {careerDetail.body}
                         </div>
                       </div>
@@ -207,7 +209,7 @@ const About = () => {
                       {personalProject.subTitle}
                     </div>
                   )}
-                  <div className="text-2xl whitespace-pre-wrap -ml-6">
+                  <div className="text-2xl whitespace-pre-wrap">
                     {personalProject.body}
                   </div>
                 </div>

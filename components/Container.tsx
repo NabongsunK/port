@@ -41,7 +41,7 @@ const Container = (props: any) => {
         className={`w-full max-w-screen-lg flex flex-col justify-between items-center my-1 sm:flex-row`}
       >
         <Link href={icons[props.thema ? props.thema : "nabongsun"].href}>
-          <a className={`flex flex-row items-center`}>
+          <a className={`flex flex-row items-center hidden sm:flex`}>
             <Image
               src={icons[props.thema ? props.thema : "nabongsun"].src}
               alt="로고"
