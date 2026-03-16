@@ -47,7 +47,7 @@ const portfolios: Port[] = [
   {
     id: 6,
     title: "Nabongsun.shop v2",
-    imgsrc: `${basePath}/portfolios/nabongsun2.png`,
+    imgsrc: `${basePath}/portfolios/nabongsun.jpg`,
     filter: ["all", "nextjs"],
     path: "portfolio/nabongsun2",
   },
