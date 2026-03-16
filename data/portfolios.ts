@@ -9,7 +9,7 @@ type Port = {
 const portfolios: Port[] = [
   {
     id: 8,
-    title: "레거시 VB 시스템 웹 전환 (마이그레이션)",
+    title: "레거시 VB 시스템 웹 전환",
     imgsrc: "/portfolios/carrer1.png",
     filter: ["all", "react", "db"],
     path: "portfolio/carrer1",
