@@ -238,7 +238,7 @@ const personalProjects: PersonalProject[] = [
 
     ■ Skill
     Next.js / Tailwind CSS / TypeScript`,
-    link: "https://nabongsun.shop",
+    link: "https://wwmw.shop/port",
     github: "https://github.com/NabongsunK/port",
     portfolioPath: "portfolio/nabongsun",
   },
