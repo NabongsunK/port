@@ -10,7 +10,7 @@ const getFiltered = () => {
 
   filters.forEach((filter) => {
     const filteredIndexes = indexes.filter((idx) =>
-      portfolios[idx].filter.includes(filter)
+      portfolios[idx].filter.includes(filter),
     );
     ret[filter] = filteredIndexes;
   });

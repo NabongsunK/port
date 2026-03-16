@@ -1,7 +1,15 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { FaGithub, FaExternalLinkAlt, FaRegFolderOpen } from "react-icons/fa";
 import Container from "../../components/Container";
-import { infos, timelines } from "../../data/maindata";
+import {
+  infos,
+  carrers,
+  carrerDetails,
+  educations,
+  personalProjects,
+} from "../../data/maindata";
 
 const About = () => {
   return (
@@ -22,7 +30,7 @@ const About = () => {
               </div>
               <div className="flex flex-col m-4 gap-4">
                 <div className="bold text-6xl">강성수</div>
-                <div className="bold text-3xl">신입 프론트엔드 개발자</div>
+                <div className="bold text-3xl">2년차 풀스택 개발자</div>
               </div>
             </div>
             <div className="flex flex-row flex-wrap my-10 md:my-0 md:flex-col">
@@ -44,80 +52,171 @@ const About = () => {
                     <div className="flex flex-col">
                       <div className="flex flex-row items-center">
                         <div className="flex sm:hidden mr-3">{info.logo}</div>
-                        <div>{info.title}</div>
+                        <div className="select-none">{info.title}</div>
                       </div>
 
-                      <div className="text-2xl">{info.body}</div>
+                      <div className={`text-2xl ${info.className}`}>
+                        {info.body}
+                      </div>
                     </div>
                   </div>
                 </a>
               ))}
             </div>
+
+            <div className="hidden md:flex flex-col gap-3 mt-8 text-xl">
+              <a href="#career" className="my_hover_line right cursor-pointer">
+                경력사항으로 이동
+              </a>
+              <a
+                href="#education"
+                className="my_hover_line right cursor-pointer"
+              >
+                학력사항으로 이동
+              </a>
+              <a
+                href="#projects"
+                className="my_hover_line right cursor-pointer"
+              >
+                개인 프로젝트로 이동
+              </a>
+            </div>
           </div>
 
           <div className="container mx-auto w-full h-full">
-            <div className="block md:hidden">
-              <div className="my_line -my-8"></div>
+            <div
+              id="career"
+              className="flex flex-col gap-4 text-6xl font-bold mb-12"
+            >
+              경력사항
             </div>
+            {carrers.map((career, _idx) => (
+              <div key={`career ${_idx}`} className="mb-8">
+                <div className="flex flex-row items-center gap-4">
+                  <div className="text-5xl font-semibold">{career.title}</div>
+                  <div className="text-4xl text-gray-600">{career.date}</div>
+                </div>
 
-            <div className="relative wrap overflow-hidden h-full">
-              <div>
-                <div className="my_main_line absolute h-full md:border-2"></div>
-              </div>
-
-              {timelines.map((timeline, _idx) => (
-                <div
-                  key={`timeline ${_idx}`}
-                  className={
-                    `mb-8 flex justify-between items-center w-full ` +
-                    (!(_idx % 2) ? "md:flex-row-reverse" : "")
-                  }
-                >
-                  <div className={`order-1 w-5/12 hidden md:block`}></div>
-                  <a
-                    className={
-                      `my_main_item order-1 px-1 py-4 w-full md:w-5/12 ` +
-                      (_idx % 2 ? "" : "md:text-right")
-                    }
-                    href={timeline.src}
-                  >
-                    <p className="text-2xl">{timeline.date}</p>
-                    <div
-                      className={
-                        `flex font-bold text-4xl mb-2 md:text-5xl ` +
-                        (timeline.title ? "" : "hidden") +
-                        (_idx % 2 ? "" : "md:flex-row-reverse")
-                      }
-                    >
+                {/* 여기서부터는 메인 캐리어 '아래'에 위치 */}
+                <div className="mt-3 ml-6 space-y-8">
+                  {carrerDetails
+                    .filter(
+                      (careerDetail) => careerDetail.parentId === career.id,
+                    )
+                    .map((careerDetail, detailIdx) => (
                       <div
-                        className={
-                          `pb-2 ` + (timeline.src ? "my_hover_line " : "")
-                        }
+                        key={`careerDetail ${detailIdx}`}
+                        className="border-l-2 border-gray-300 pl-4"
                       >
-                        {timeline.title}
+                        <div className="text-2xl text-gray-600">
+                          {careerDetail.date}
+                        </div>
+                        <div className="text-4xl font-semibold flex items-center gap-3 flex-wrap">
+                          <span>{careerDetail.title}</span>
+                          {careerDetail.portfolioPath && (
+                            <Link
+                              href={`/${careerDetail.portfolioPath}`}
+                              className="inline-flex text-3xl text-gray-600 hover:text-gray-900 my_hover_line"
+                              aria-label="포트폴리오 상세 보기"
+                            >
+                              <FaRegFolderOpen className="cursor-pointer" />
+                            </Link>
+                          )}
+                        </div>
+                        <div className="text-2xl whitespace-pre-wrap -ml-6">
+                          {careerDetail.body}
+                        </div>
                       </div>
-                    </div>
-                    <p className="text-2xl leading-snug">
-                      {timeline.body.split("\n").map((line, index) => (
-                        <span key={index}>
-                          {line}
-                          <br />
-                        </span>
-                      ))}
-                    </p>
-                  </a>
+                    ))}
+                </div>
+              </div>
+            ))}
+
+            <div
+              id="education"
+              className="flex flex-col gap-4 text-6xl font-bold mb-12"
+            >
+              학력사항
+            </div>
+            <div className="border-l-2 border-gray-300 pl-4 ml-6 mb-8 space-y-8 ">
+              {educations.map((education, detailIdx) => (
+                <div key={`education ${detailIdx}`}>
+                  <div className="text-2xl text-gray-600">{education.date}</div>
+                  <div className="text-4xl font-semibold">
+                    {education.title}
+                  </div>
+                  <div className="text-2xl whitespace-pre-wrap">
+                    {education.body}
+                  </div>
                 </div>
               ))}
             </div>
-            <img
-              className="mx-auto -mt-56 md:-mt-36"
-              src="https://user-images.githubusercontent.com/54521023/116968861-ef21a000-acd2-11eb-95ac-a34b5b490265.png"
-            />
+
+            <div
+              id="projects"
+              className="flex flex-col gap-4 text-6xl font-bold mb-12"
+            >
+              개인 프로젝트
+            </div>
+
+            <div className="space-y-8">
+              {personalProjects.map((personalProject, _idx) => (
+                <div
+                  key={`personalProject ${_idx}`}
+                  className="border-l-2 border-gray-300 pl-4 ml-6 mb-4"
+                >
+                  <div className="text-2xl text-gray-600">
+                    {personalProject.date}
+                  </div>
+                  <div className="text-4xl font-semibold flex items-center gap-3 flex-wrap">
+                    <span>{personalProject.title}</span>
+                    {personalProject.portfolioPath && (
+                      <Link
+                        href={`/${personalProject.portfolioPath}`}
+                        className="inline-flex text-3xl text-gray-600 hover:text-gray-900 "
+                        aria-label="포트폴리오 상세 보기"
+                      >
+                        <FaRegFolderOpen className="cursor-pointer" />
+                      </Link>
+                    )}
+                    {personalProject.link && (
+                      <a
+                        href={personalProject.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex text-3xl text-gray-600 hover:text-gray-900"
+                        aria-label="사이트 보기"
+                      >
+                        <FaExternalLinkAlt />
+                      </a>
+                    )}
+                    {personalProject.github && (
+                      <a
+                        href={personalProject.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex text-3xl text-gray-600 hover:text-gray-900"
+                        aria-label="GitHub"
+                      >
+                        <FaGithub />
+                      </a>
+                    )}
+                  </div>
+                  {personalProject.subTitle && (
+                    <div className="text-2xl text-gray-500 mt-1">
+                      {personalProject.subTitle}
+                    </div>
+                  )}
+                  <div className="text-2xl whitespace-pre-wrap -ml-6">
+                    {personalProject.body}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
     </Container>
   );
 };
-
 export default About;

@@ -159,7 +159,9 @@ a {
   left: 50%;
   position: absolute;
   background: var(--my--heading);
-  transition: width 0.3s ease 0s, left 0.3s ease 0s;
+  transition:
+    width 0.3s ease 0s,
+    left 0.3s ease 0s;
   width: 0;
 }
 
@@ -171,6 +173,20 @@ a {
 .my_hover_line:hover:after {
   left: 5%;
   width: 90%;
+}
+/* 반대 방향: 오른쪽에서 시작 */
+.my_hover_line.right:after {
+  left: auto;
+  left: 0%;
+  transition:
+    width 0.3s ease 0s,
+    right 0.3s ease 0s;
+  width: 0;
+}
+
+.my_hover_line.right:hover:after {
+  right: 0%;
+  width: 50%;
 }
 
 .my_line {
