@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { FaGithub, FaExternalLinkAlt, FaRegFolderOpen } from "react-icons/fa";
+import { FaGithub, FaExternalLinkAlt, FaSearch } from "react-icons/fa";
 import Container from "../../components/Container";
 import {
   infos,
@@ -95,7 +95,9 @@ const About = () => {
             {carrers.map((career, _idx) => (
               <div key={`career ${_idx}`} className="mb-8">
                 <div className="flex flex-row items-center gap-4">
-                  <div className="text-5xl font-semibold">{career.title}</div>
+                  <div className="text-5xl font-semibold my_accent_text">
+                    {career.title}
+                  </div>
                   <div className="text-4xl text-gray-600">{career.date}</div>
                 </div>
 
@@ -114,20 +116,51 @@ const About = () => {
                           {careerDetail.date}
                         </div>
                         <div className="text-4xl font-semibold flex items-center gap-3 flex-wrap">
-                          <span>{careerDetail.title}</span>
+                          <span className="my_accent_text">
+                            {careerDetail.title}
+                          </span>
                           {careerDetail.portfolioPath && (
                             <Link
                               href={`/${careerDetail.portfolioPath}`}
-                              className="inline-flex text-3xl text-gray-600 hover:text-gray-900 my_hover_line"
+                              className="inline-flex text-3xl my_accent_text my_accent_text_hover my_hover_line"
                               aria-label="포트폴리오 상세 보기"
                             >
-                              <FaRegFolderOpen className="cursor-pointer" />
+                              <FaSearch className="cursor-pointer text-[0.8em]" />
                             </Link>
                           )}
                         </div>
                         <div className="text-2xl whitespace-pre-wrap">
                           {careerDetail.body}
                         </div>
+
+                        {careerDetail.problems &&
+                          careerDetail.problems.length > 0 && (
+                            <details className="mt-6 rounded-xl my_accent_border my_accent_surface">
+                              <summary className="cursor-pointer select-none list-none p-4 my_accent_surface_hover rounded-xl transition-colors">
+                                <div className="flex items-center justify-between gap-4">
+                                  <div className="text-3xl font-semibold my_accent_text">
+                                    문제 해결 사례{" "}
+                                    {careerDetail.problems.length}건 보기
+                                  </div>
+                                  <div className="text-2xl my_accent_text">
+                                    펼치기/접기
+                                  </div>
+                                </div>
+                              </summary>
+                              <div className="px-4 pb-4 space-y-4">
+                                {careerDetail.problems.map((p, pIdx) => (
+                                  <div
+                                    key={`problem-${careerDetail.id}-${pIdx}`}
+                                    className="bg-white rounded-xl p-4 my_accent_border shadow-sm"
+                                  >
+                                    <div className="text-2xl whitespace-pre-wrap">
+                                      {`■ 문제점\n${p.problem}\n\n■ 해결책\n${p.solution}`}
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            </details>
+                          )}
                       </div>
                     ))}
                 </div>
@@ -171,14 +204,16 @@ const About = () => {
                     {personalProject.date}
                   </div>
                   <div className="text-4xl font-semibold flex items-center gap-3 flex-wrap">
-                    <span>{personalProject.title}</span>
+                    <span className="my_accent_text">
+                      {personalProject.title}
+                    </span>
                     {personalProject.portfolioPath && (
                       <Link
                         href={`/${personalProject.portfolioPath}`}
                         className="inline-flex text-3xl text-gray-600 hover:text-gray-900 "
                         aria-label="포트폴리오 상세 보기"
                       >
-                        <FaRegFolderOpen className="cursor-pointer" />
+                        <FaSearch className="cursor-pointer text-[0.8em]" />
                       </Link>
                     )}
                     {personalProject.link && (

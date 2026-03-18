@@ -7,3 +7,21 @@
 .my_main_item div {
   color: var(--my--heading);
 }
+
+/* Theme accent helpers (use CSS variables) */
+.my_accent_text {
+  color: var(--my--heading);
+}
+
+.my_accent_text_hover:hover {
+  color: var(--my--heading);
+  filter: saturate(1.1) brightness(0.95);
+}
+
+.my_accent_surface {
+  background: color-mix(in srgb, var(--my--heading) 10%, transparent);
+}
+
+.my_accent_surface_hover:hover {
+  background: color-mix(in srgb, var(--my--heading) 16%, transparent);
+}
