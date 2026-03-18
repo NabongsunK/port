@@ -122,10 +122,17 @@ const About = () => {
                           {careerDetail.portfolioPath && (
                             <Link
                               href={`/${careerDetail.portfolioPath}`}
-                              className="inline-flex text-3xl my_accent_text my_accent_text_hover my_hover_line"
-                              aria-label="포트폴리오 상세 보기"
+                              legacyBehavior
                             >
-                              <FaSearch className="cursor-pointer text-[0.8em]" />
+                              <a
+                                className="inline-flex text-3xl relative group"
+                                aria-label="포트폴리오 상세 보기"
+                              >
+                                <FaSearch className="cursor-pointer " />
+                                <span className="my_tooltip pointer-events-none absolute -top-12 left-1/2 -translate-x-1/2 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-150 z-10">
+                                  포트폴리오 상세 보기
+                                </span>
+                              </a>
                             </Link>
                           )}
                         </div>
@@ -210,10 +217,17 @@ const About = () => {
                     {personalProject.portfolioPath && (
                       <Link
                         href={`/${personalProject.portfolioPath}`}
-                        className="inline-flex text-3xl text-gray-600 hover:text-gray-900 "
-                        aria-label="포트폴리오 상세 보기"
+                        legacyBehavior
                       >
-                        <FaSearch className="cursor-pointer text-[0.8em]" />
+                        <a
+                          className="inline-flex text-3xl text-gray-600 hover:text-gray-900 relative group"
+                          aria-label="포트폴리오 상세 보기"
+                        >
+                          <FaSearch className="cursor-pointer " />
+                          <span className="my_tooltip pointer-events-none absolute -top-12 left-1/2 -translate-x-1/2 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-150 z-10">
+                            포트폴리오 상세 보기
+                          </span>
+                        </a>
                       </Link>
                     )}
                     {personalProject.link && (
@@ -221,10 +235,13 @@ const About = () => {
                         href={personalProject.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex text-3xl text-gray-600 hover:text-gray-900"
+                        className="inline-flex text-3xl text-gray-600 hover:text-gray-900 relative group"
                         aria-label="사이트 보기"
                       >
                         <FaExternalLinkAlt />
+                        <span className="my_tooltip pointer-events-none absolute -top-12 left-1/2 -translate-x-1/2 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-150 z-10">
+                          사이트 열기
+                        </span>
                       </a>
                     )}
                     {personalProject.github && (
@@ -232,10 +249,13 @@ const About = () => {
                         href={personalProject.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex text-3xl text-gray-600 hover:text-gray-900"
+                        className="inline-flex text-3xl text-gray-600 hover:text-gray-900 relative group"
                         aria-label="GitHub"
                       >
                         <FaGithub />
+                        <span className="my_tooltip pointer-events-none absolute -top-12 left-1/2 -translate-x-1/2 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-150 z-10">
+                          GitHub 열기
+                        </span>
                       </a>
                     )}
                   </div>

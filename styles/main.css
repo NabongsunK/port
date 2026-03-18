@@ -25,3 +25,11 @@
 .my_accent_surface_hover:hover {
   background: color-mix(in srgb, var(--my--heading) 16%, transparent);
 }
+
+.my_tooltip {
+  background: rgba(15, 23, 42, 0.98); /* 거의 불투명한 딥 네이비 */
+  color: #ffffff;
+  border-radius: 0.5rem;
+  padding: 0.25rem 0.75rem;
+  font-size: 1.4rem;
+}
