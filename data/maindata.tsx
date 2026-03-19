@@ -305,7 +305,10 @@ const personalProjects: PersonalProject[] = [
 - PM2·Nginx·쉘 스크립트를 활용한 서버 배포 및 자동 동기화 스크립트 작성
 
 ■ 주요 성과
-- 다국어·권한(UID)·데이터 관리가 분리된 구조로, 새 기능을 빠르게 추가·확장할 수 있는 아키텍처 확보
+- 미들웨어에서 lang 쿠키 검증 후 x-lang 헤더로 주입하는 방식으로 다국어(ko/en/ja/zh)를 인프라 수준으로 중앙화
+- UID 발급 API와 로그를 활용해, 로그인 없이도 사용자의 활동 이력을 추적·관리할 수 있는 운영 관점의 식별 체계 확보
+- git pull → install → build → restart 를 자동화한 배포 스크립트로, 수동 배포 작업을 최소화하고 롤아웃 시간을 단축
+- 맥미니 + PM2 + Nginx + Cloudflare Tunnel 기반으로, 고정 IP 없이도 외부에서 안정적으로 접속 가능한 운영 환경 구성
 
 ■ Skill
 Next.js / MySQL / Docker / Cloudflare Tunnel`,
@@ -345,7 +348,10 @@ Next.js / Tailwind CSS / TypeScript`,
 - 결과 공유를 위한 캡처용 레이아웃·템플릿 구성
 
 ■ 주요 성과
-- 텍스트 중심 전적 정보를 시각적으로 확인·공유 가능한 서비스 구현
+- 로스트아크 전적 정보를 이미지로 변환해, 텍스트 위주 조회보다 직관적인 확인·공유 경험 제공
+- 반응형 UI와 테마/상호작용 기능을 적용해 사용성 높은 전적 검색 페이지 구현
+- AWS EC2 + Route53 기반으로 실제 서비스 배포를 경험하고, 운영 중 발생한 성능·용량 이슈를 개선
+- 주간 방문자 300명 이상을 기록하며 실사용자 피드백 기반으로 기능을 보완
 
 ■ Skill
 React / Node.js / AWS EC2`,
@@ -365,7 +371,8 @@ React / Node.js / AWS EC2`,
 - React, Node.js 기반 반응형 SPA 구조 설계 및 개발
 
 ■ 주요 성과
-- 전국 축제 정보를 한눈에 비교·검색할 수 있는 서비스 제공
+- 첫번째 프로젝트로써 기획부터 개발까지 경험을 쌓을 수 있었음
+- 분업 및 협업 경험을 쌓을 수 있었음
 
 ■ Skill
 React / Node.js / REST API`,

@@ -52,8 +52,8 @@ const AboutSidebar = () => {
       </div>
 
       <div className="hidden md:flex flex-col gap-3 ml-4 mt-8 text-xl">
-        <a href="#Introduce" className="my_hover_line right cursor-pointer">
-          Introduce
+        <a href="#introduce" className="my_hover_line right cursor-pointer">
+          INTRODUCE
         </a>
         <a href="#experience" className="my_hover_line right cursor-pointer">
           EXPERIENCE
