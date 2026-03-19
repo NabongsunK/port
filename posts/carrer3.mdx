@@ -62,7 +62,8 @@ description: "Python 데이터 처리 로직을 독립 API 서비스로 분리·
 
 - 배치 실행 시각을 서비스 사용 패턴을 고려해 조정하고,  
   대량 처리 구간은 **청크 단위 처리·타임아웃**을 두어 한 번에 부하가 몰리지 않도록 설계
-- 필요 시 **큐·비동기 처리** 도입을 검토하고, 우선순위가 높은 API와 배치가 서로 방해하지 않도록 리소스 사용 기준을 정리
+- 대량 처리 구간은 작업을 큐잉하고, **ticker 기반 레이트 리밋**으로 “일정 시간마다 N개씩만 실행”되도록 제한해 순간 부하 스파이크를 방지
+- 피크 타임에는 레이트를 낮추고 비피크에는 높이는 식으로 처리량을 조정해, API/배치가 서로 방해하지 않도록 운영 기준을 정리
 
 #### 5.3.1 문제점
 
@@ -82,14 +83,12 @@ description: "Python 데이터 처리 로직을 독립 API 서비스로 분리·
 
 - **Backend**
   - Python, Golang
-- **LLM/AI**
-  - Hugging Face Transformers, LangChain
 - **Database**
   - MSSQL
 - **Infra**
   - Docker
 - **기타**
-  - Git, API 문서화 도구
+  - Git, Hugging Face Transformers, LangChain
 
 ## 3. 회고 & 다음 개선
 

@@ -25,19 +25,17 @@ type Info = {
   src?: string;
   className?: string;
 };
-type Career = {
-  id: number;
-  date: string;
-  title: string;
-  body?: string;
+
+type Introduce = {
+  main: string;
+  updateDate: string;
 };
 
-type Timeline = {
+type Experience = {
   id: number;
   date: string;
   title: string;
   body?: string;
-  src?: string;
 };
 
 type CarrerDetail = {
@@ -114,7 +112,25 @@ const infos: Info[] = [
   },
 ];
 
-const carrers: Career[] = [
+const Introduce: Introduce = {
+  main: `
+웹/서버 개발 2년차로서, 레거시 시스템 웹 전환 및 대용량 데이터 처리 API 구축 경험을 보유하고 있습니다.  
+동료 개발자뿐 아니라 고객사 실무자와 직접 소통하며 요구사항을 조율한 경험이 있으며,
+다양한 기술 스택과 협업 경험을 바탕으로 효율적인 서비스 개발에 기여할 자신이 있습니다.
+
+· 레거시 시스템 분석을 통한 서버 중심 아키텍처 재구성 경험
+· T-SQL 기반 Stored Procedure 설계 및 쿼리 성능 최적화
+· 트랜잭션 관리 및 데이터 무결성을 고려한 서버 로직 구현
+· Golang 기반 백엔드 서버 개발
+  - REST API 설계 및 구현
+  - context, goroutine, channel 등을 활용한 동시성 처리 및 비동기 작업 처리
+· Python(FastAPI) 기반 API 서비스 구축 및 컨테이너 환경 운영 경험
+· Docker·PM2·Nginx 등을 활용한 배포·운영 환경 구성 및 모니터링 경험
+`,
+  updateDate: "2026.03.19",
+};
+
+const carrers: Experience[] = [
   {
     id: 1,
     date: "2024.04 ~ 2025.12",
@@ -154,17 +170,17 @@ const carrerDetails: CarrerDetail[] = [
         problem:
           "폼/이벤트 안에 비즈니스 로직·화면 제어·데이터 접근이 섞여 있어, 그대로 옮기면 새 프로젝트도 빠르게 레거시화될 위험이 있었음",
         solution:
-          "화면 요구사항을 입·출력 관점(입력 필드/검증/저장 대상)으로 먼저 정리하고, 비즈니스 규칙은 Service 계층으로 분리, DB 접근은 Repository 계층으로만 처리하도록 책임을 분리(Controller/Service/Repository 구조 정착)",
+          "화면 요구사항을 입·출력 관점(입력 필드/검증/저장 대상)으로 먼저 정리하고, 비즈니스 규칙은 Service 계층으로 분리, DB 접근은 Repository 계층으로만 처리하도록 책임을 분리",
       },
       {
         problem:
           "프로젝트 팀원이 자주 바뀌어 업무 맥락과 기술 결정 이유가 유실되고, 인수인계 비용이 반복적으로 발생했음",
         solution:
-          "레거시 분석 결과·API 명세·배포/실행 방법을 온보딩 문서/Runbook으로 정리하고, 계층 구조·네이밍 규칙을 통일해 신규 합류자가 동일한 패턴으로 빠르게 기여할 수 있게 개선",
+          "레거시 분석 결과·API 명세·배포/실행 방법을 온보딩 문서/Runbook으로 정리하고, Controller/Service/Repository 계층 구조와 네이밍 규칙을 통일해, 새로 합류한 팀원도 같은 패턴으로 바로 기여할 수 있게 함",
       },
       {
         problem:
-          "초기 일정 산정 시 레거시 분석·테스트·사용자 검증에 필요한 시간을 과소평가해, 마감이 촉박할 때는 필수 기능 안정화에 집중하고 부가 기능은 후속 릴리스로 조정",
+          "초기 일정 산정 시 레거시 분석·테스트·사용자 검증에 필요한 시간을 과소평가해, 마이그레이션 막바지에 일정 압박이 집중되는 상황이 발생함",
         solution:
           "필수 기능/부가 기능을 나눠, 마감이 촉박할 때는 필수 기능 안정화에 집중하고 부가 기능은 후속 릴리스로 조정",
       },
@@ -241,6 +257,12 @@ Python / FastAPI / Docker / MSSQL / Golang`,
           "기존 Python 로직이 ‘한 번 실행하고 끝’인 스크립트 가정이라, 서비스 운영에 필요한 재시도·부분 실패 처리·로깅 체계가 부족했음",
         solution:
           "처리 단계별 try/except·로깅·재시도 정책을 설계하고 실패 구간만 재실행 가능하도록 단계(구간) 단위로 분해. 스케줄러/응답에 실행 결과·에러 코드를 남겨 모니터링·알림 연동 기반을 마련",
+      },
+      {
+        problem:
+          "정기 배치 실행 시간과 기존 서비스의 피크 타임이 겹치거나, 처리량이 많을 때 리소스·DB 부하가 예상보다 커지는 경우가 있었음",
+        solution:
+          "배치 실행 시각을 피크 타임 외로 조정하고, 청크 단위 처리와 ticker 기반 레이트 리밋을 적용해 순간 부하 스파이크를 방지. 피크·비피크별 처리량을 조절해 API와 배치가 서로 방해하지 않도록 운영 기준을 정리",
       },
       {
         problem:
@@ -352,4 +374,11 @@ React / Node.js / REST API`,
   },
 ];
 
-export { infos, carrers, carrerDetails, personalProjects, educations };
+export {
+  infos,
+  carrers,
+  carrerDetails,
+  personalProjects,
+  educations,
+  Introduce,
+};

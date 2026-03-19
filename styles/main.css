@@ -20,6 +20,7 @@
 
 .my_accent_surface {
   background: color-mix(in srgb, var(--my--heading) 10%, transparent);
+  border: 1px solid var(--my--heading);
 }
 
 .my_accent_surface_hover:hover {
