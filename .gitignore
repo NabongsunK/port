@@ -38,3 +38,6 @@ next-env.d.ts
 .contentlayer/
 
 .env
+
+# auto_sync / PM2 로그
+/logs/
