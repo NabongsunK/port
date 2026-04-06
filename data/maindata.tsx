@@ -313,7 +313,7 @@ const personalProjects: PersonalProject[] = [
 ■ Skill
 Next.js / MySQL / Docker / Cloudflare Tunnel`,
     link: "https://wwmw.shop",
-    github: "https://github.com/NabongsunK/sideProject",
+    github: "https://github.com/NabongsunK/wwmw",
     portfolioPath: "portfolio/wwmw",
   },
   {
@@ -355,7 +355,7 @@ Next.js / Tailwind CSS / TypeScript`,
 
 ■ Skill
 React / Node.js / AWS EC2`,
-    github: "https://github.com/jongak/aloa",
+    github: "https://github.com/NabongsunK/aloa",
     portfolioPath: "portfolio/aloa",
   },
   {
