@@ -1,3 +1,14 @@
+# Nabongsun shop
+
+## 개요
+
+**Next.js** 기반 **포트폴리오** 프로젝트 입니다.
+
+- **기술 스택**: Next.js · TypeScript · Tailwind CSS · PM2 · Nginx · Cloudflare Tunnel
+- **공개 URL**: [https://wwmw.shop/port](https://wwmw.shop/port)
+
+---
+
 ## 아키텍처 / 설계
 
 ### 기술 스택
@@ -38,9 +49,6 @@ flowchart TB
     pm2 --> portfolio
   end
 ```
-
-- **위**: 외부에서 들어오는 HTTP(S) 흐름(Cloudflare → nginx → `/` vs `/port` 분기).
-- **아래**: 코드 반영을 위한 루프(git → 빌드 → PM2 재시작). **같은 `portfolio` 노드**를 nginx가 프록시하고 PM2가 띄운 프로세스로 보면 됨.
 
 ---
 
